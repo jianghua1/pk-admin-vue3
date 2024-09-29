@@ -34,6 +34,8 @@ import { notBundle } from 'vite-plugin-electron/plugin'
 
 import { VpAutoImports, VpComponentsResolver } from 'el-admin-components/vite'
 
+import { version } from './package.json'
+
 // 过滤element-plus的.mjs的文件，不打包不需要的locales
 // 判断，/locales中对应的文件名的.mjs文件作为过滤条件 -> 保留
 function customExternals(id: string) {
@@ -284,7 +286,8 @@ export default defineConfig(({ command, mode }) => {
       host: '0.0.0.0'
     },
     define: {
-      'process.env': process.env
+      'process.env': process.env,
+      __APP_VERSION__: JSON.stringify(version)
     },
     optimizeDeps: {
       exclude: [isElectron ? 'virtual:pwa-register/vue' : ''],

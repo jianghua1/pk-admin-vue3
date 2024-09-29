@@ -14,7 +14,7 @@ export const useTabsStore = defineStore('tabs', {
     }) as TabsStoreType,
   actions: {
     addRoute(route: AppRouteMenuItem) {
-      if (this.tabs.some((item) => item.name === route.name)) return
+      if (this.tabs.some((item) => item.name === route.name || item.path === route.path)) return
       this.tabs.push({ ...route })
     },
     removeRoute(path: string) {

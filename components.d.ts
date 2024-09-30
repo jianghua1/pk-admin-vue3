@@ -19,7 +19,6 @@ declare module 'vue' {
     VpForm: typeof import('el-admin-components')['VpForm']
     VpHeader: typeof import('el-admin-components')['VpHeader']
     VpHeaderTabs: typeof import('el-admin-components')['VpHeaderTabs']
-    VpLoginForm: typeof import('el-admin-components')['VpLoginForm']
     VpMenu: typeof import('el-admin-components')['VpMenu']
   }
 }

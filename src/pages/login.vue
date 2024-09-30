@@ -2,7 +2,7 @@
   <div class="w-[900px] h-[600px] rounded">
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
       <el-tab-pane label="密码登录" name="pass">
-        <VpForm :schema="loginFormSchema" @submit="handleSubmit"></VpForm>
+        <VpForm :schema="loginFormSchema" @submit="handleSubmit" :hide-required-asterisk="true"></VpForm>
       </el-tab-pane>
       <el-tab-pane label="验证码登录" name="code">Config</el-tab-pane>
     </el-tabs>
@@ -28,7 +28,7 @@ const userIcon = () => <i class="i-ep:user text-xl self-center"></i>
 
 const passIcon = () => <i class="i-ep:lock text-xl self-center"></i>
 
-const loginFormSchema = ref<VpFormSchema[]>([
+const loginFormSchema = ref<VpFormSchema>([
   {
     prop: 'username',
     value: '',

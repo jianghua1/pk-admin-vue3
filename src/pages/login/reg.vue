@@ -2,7 +2,7 @@
   <div>
     <el-tabs v-model="activeName" class="demo-tabs">
       <el-tab-pane label="用户名注册" name="pass">
-        <VpForm :schema="loginFormSchema" hide-required-asterisk ref="loginFormRef">
+        <VpForm :schema="regFormSchema" hide-required-asterisk ref="regFormRef" v-model="model">
           <template #actions>
             <el-button type="primary" @click="onSubmit" class="w-full">立即注册</el-button>
           </template>
@@ -27,19 +27,12 @@
 </template>
 
 <script setup lang="tsx">
+import { useForm } from "el-admin-components"
 import type { VpFormSchema } from "el-admin-components"
-definePage({
-  meta: {
-    title: '欢迎 回来',
-    hideMenu: true,
-    layout: 'single-page',
-    position: 'center',
-    backgroundImage: './bg.jpg'
-  }
-})
+
 const activeName = ref('pass')
 
-const loginFormRef = ref()
+const regFormRef = ref()
 
 const codeFormRef = ref()
 
@@ -51,118 +44,114 @@ const mobileIcon = () => <i class="i-ep:cellphone text-xl self-center"></i>
 
 const messageIcon = () => <i class="i-ep:message text-xl self-center"></i>
 
-const loginFormSchema = ref<VpFormSchema>([
+const regFormSchema = ref<VpFormSchema>([
   {
     prop: 'username',
     value: '',
+    type: 'input',
     attrs: {
       placeholder: '请输入用户名'
     },
-    type: 'input',
     span: 24,
     labelSlot: userIcon,
-    rules: [
-      {
-        required: true,
-        message: '用户名不能为空',
-        trigger: 'blur'
-      }
-    ]
+    rules: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
   },
   {
     prop: 'password',
     value: '',
+    type: 'input',
     attrs: {
       placeholder: '请输入密码',
       type: 'password'
     },
-    type: 'input',
-    span: 24,
-    labelSlot: passIcon,
     rules: [
-      {
-        required: true,
-        message: '密码不能为空',
-        trigger: 'blur'
-      }
-    ]
+      { required: true, message: '密码不能为空', trigger: 'blur' },
+      // 密码需要6-32位的字符
+      { min: 6, max: 32, message: '密码格式不正确', trigger: 'blur' }
+    ],
+    span: 24,
+    labelSlot: passIcon
+  },
+  {
+    prop: 'repassword',
+    value: '',
+    type: 'input',
+    attrs: {
+      placeholder: '请再次输入密码',
+      type: 'password'
+    },
+    rules: [
+      { required: true, message: '密码不能为空', trigger: 'blur' },
+      // 密码需要6-32位的字符
+      { min: 6, max: 32, message: '密码格式不正确', trigger: 'blur' },
+      { validator: checkPass, trigger: 'blur' }
+    ],
+    span: 24,
+    labelSlot: passIcon
   }
 ])
 
+const { model, formValue } = useForm(regFormSchema.value);
+
+//密码验证
+function checkPass(rule: any, value: string, callback: any) {
+  if (value !== formValue.value.password) {
+    callback(new Error('两次输入密码不一致!'));
+  }
+  callback();
+}
+
 const codeFormSchema = ref<VpFormSchema>([
   {
-    prop: 'phone',
+    prop: 'mobile',
     value: '',
+    type: 'input',
     attrs: {
       placeholder: '请输入手机号'
     },
-    type: 'input',
     span: 24,
     labelSlot: mobileIcon,
     rules: [
-      {
-        required: true,
-        message: '请输入手机号',
-        trigger: 'blur'
-      },
-      {
-        pattern: /^1[3456789]\d{9}$/,
-        message: '手机号格式不正确',
-        trigger: 'blur'
-      }
+      { required: true, message: '手机号不能为空', trigger: 'blur' },
+      // 1位手机号
+      { pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }
     ]
   },
   {
     prop: 'code',
     value: '',
+    type: 'input',
     attrs: {
       placeholder: '请输入验证码'
     },
-    type: 'input',
     span: 24,
+    rules: [
+      { required: true, message: '验证码不能为空', trigger: 'blur' },
+      // 只能输入6位数字
+      { pattern: /^\d{6}$/, message: '验证码格式不正确', trigger: 'blur' }
+    ],
     labelSlot: messageIcon,
     suffixSlot: () => (
-      <el-button type="primary" class="ml-2">获取验证码</el-button>
-    ),
-    rules: [
-      {
-        required: true,
-        message: '验证码不能为空',
-        trigger: 'blur'
-      }, {
-        min: 6,
-        max: 6,
-        message: '验证码长度为6位',
-        trigger: 'blur'
-      }, {
-        pattern: /^\d{6}$/,
-        message: '验证码格式不正确',
-        trigger: 'blur'
-      }
-    ]
+      <el-button type="primary" class="ml-3">
+        获取验证码
+      </el-button>
+    )
   },
   {
     prop: 'password',
     value: '',
+    type: 'input',
     attrs: {
-      placeholder: '请输入密码',
+      placeholder: '请设置密码',
       type: 'password'
     },
-    type: 'input',
     span: 24,
-    labelSlot: passIcon,
-    rules: [
-      {
-        required: true,
-        message: '密码不能为空',
-        trigger: 'blur'
-      }
-    ]
+    labelSlot: passIcon
   }
 ])
 
 const onSubmit = () => {
-  loginFormRef.value?.validate((valid) => {
+  regFormRef.value?.validate((valid) => {
     console.log(valid)
   })
 }

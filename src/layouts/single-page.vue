@@ -1,11 +1,12 @@
 <template>
   <div class="w-screen h-screen overflow-hidden">
-    <div class="position-fixed right-10 top-0">
+    <!-- <div class="position-fixed right-10 top-0">
       <el-row class="items-center">
         <VpDarkModeToggle class="mr-2"></VpDarkModeToggle>
-        <VpChangeLocale :locales="locales" @change="handleLocalesChange" class="mr-2"></VpChangeLocale>
+        <VpChangeLocale :locales="locales" @change="handleLocalesChange" class="mr-2">
+        </VpChangeLocale>
       </el-row>
-    </div>
+    </div> -->
     <div v-if="settings.bg" :class="[
       'bg-center bg-cover w-full lg:w-1/3 xl:w-1/2 h-screen position-absolute top-0 z--1',
       settings.position === 'right' ? 'left-0' : 'right-0',

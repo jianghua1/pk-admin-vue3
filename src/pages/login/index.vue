@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" style="display: flex; flex-direction: column; align-items: center;">
-      <!-- <el-tabs v-model="activeName" class="demo-tabs"> -->
+    <el-tabs v-model="activeName">
       <el-tab-pane label="密码登录" name="pass">
         <VpForm :schema="loginFormSchema" hide-required-asterisk ref="loginFormRef">
           <template #actions>
@@ -28,15 +27,7 @@
 
 <script setup lang="tsx">
 import type { VpFormSchema } from "el-admin-components"
-definePage({
-  meta: {
-    title: '',
-    hideMenu: true,
-    layout: 'single-page',
-    position: 'center',
-    backgroundImage: './bg.jpg'
-  }
-})
+
 const activeName = ref('pass')
 
 const loginFormRef = ref()

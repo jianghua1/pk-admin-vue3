@@ -18,7 +18,7 @@ definePage({
     hideMenu: true,
     layout: 'single-page',
     position: 'center',
-    background: './bg.jpg'
+    backgroundImage: './bg.jpg'
   }
 })
 </script>

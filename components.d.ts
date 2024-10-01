@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElRow: typeof import('element-plus/es')['ElRow']
@@ -21,6 +22,7 @@ declare module 'vue' {
     VpForm: typeof import('el-admin-components')['VpForm']
     VpHeader: typeof import('el-admin-components')['VpHeader']
     VpHeaderTabs: typeof import('el-admin-components')['VpHeaderTabs']
+    VpIconify: typeof import('el-admin-components')['VpIconify']
     VpMenu: typeof import('el-admin-components')['VpMenu']
   }
 }

@@ -75,6 +75,7 @@ export default defineConfig(({ command, mode }) => {
   const EPComponentsResolver = isProd ? [] : [ElementPlusResolver()]
   return {
     base,
+    publicDir: 'public',
     build: {
       sourcemap: isSourceMap,
       rollupOptions: {

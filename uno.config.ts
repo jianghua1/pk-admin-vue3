@@ -17,6 +17,9 @@ export default defineConfig({
       }
     ]
   ],
+  shortcuts: {
+    'bg-default': 'bg-[var(--el-bg-color)]'
+  },
   presets: [
     presetWind(),
     presetIcons({

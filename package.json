@@ -26,7 +26,7 @@
     "@vueuse/core": "^10.6.1",
     "dayjs": "^1.11.13",
     "echarts": "^5.5.1",
-    "el-admin-components": "1.1.2",
+    "el-admin-components": "1.0.3",
     "element-plus": "^2.8.4",
     "gsap": "^3.12.5",
     "howler": "^2.2.4",

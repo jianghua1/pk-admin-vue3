@@ -8,8 +8,8 @@
       backgroundColor: settings?.backgroundColor
     }" class="h-full transition-width shrink-0" v-if="settings?.mode !== 'top'">
       <el-row class="h-full">
-        <el-scrollbar v-if="settings?.mode !== 'mix'" :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']"
-          :style="{
+        <el-scrollbar v-if="settings?.mode !== 'mix'"
+          :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']" :style="{
             backgroundColor:
               settings?.mode !== 'mixbar' ? 'auto' : darken(settings?.backgroundColor, 0.2)
           }">
@@ -48,12 +48,12 @@
             <Transition :name="camelToHyphen(settings?.transition || 'fade') + '-transition'" mode="out-in">
               <router-view v-slot="{ Component }" v-if="$route.meta.keepAlive">
                 <keep-alive :key="settings?.transition">
-                  <component :is="Component" :key="$route.fullPath" class="rounded bg-[var(--el-bg-color)] shadow p-4">
+                  <component :is="Component" :key="$route.fullPath" class="rounded bg-default shadow p-4">
                   </component>
                 </keep-alive>
               </router-view>
               <router-view v-slot="{ Component }" v-else>
-                <component :is="Component" :key="$route.fullPath" class="rounded bg-[var(--el-bg-color)] shadow p-4">
+                <component :is="Component" :key="$route.fullPath" class="rounded bg-default shadow p-4">
                 </component>
               </router-view>
             </Transition>

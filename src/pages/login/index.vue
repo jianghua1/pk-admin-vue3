@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" class="login-tabs">
       <el-tab-pane label="密码登录" name="pass">
         <VpForm :schema="loginFormSchema" hide-required-asterisk ref="loginFormRef">
           <template #actions>

@@ -7,12 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElButton: (typeof import('element-plus/es'))['ElButton']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDivider: (typeof import('element-plus/es'))['ElDivider']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
-    ElFormItem: (typeof import('element-plus/es'))['ElFormItem']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElLink: (typeof import('element-plus/es'))['ElLink']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
@@ -21,7 +21,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     VpChangeLocale: (typeof import('el-admin-components'))['VpChangeLocale']
     VpDarkModeToggle: (typeof import('el-admin-components'))['VpDarkModeToggle']
-    VpForm: (typeof import('el-admin-components'))['VpForm']
+    VpForm: typeof import('el-admin-components')['VpForm']
     VpHeader: typeof import('el-admin-components')['VpHeader']
     VpHeaderTabs: typeof import('el-admin-components')['VpHeaderTabs']
     VpIconify: (typeof import('el-admin-components'))['VpIconify']

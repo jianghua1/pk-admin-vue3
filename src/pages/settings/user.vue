@@ -19,8 +19,10 @@
                 </div>
               </el-button>
               <el-button type="info">
-                <i class="i-ep:search mr-l"></i>
-                <span>查&nbsp;&nbsp;询</span>
+                <div class="flex">
+                  <i class="i-ep:search mr-l"></i>
+                  <span>查&nbsp;&nbsp;询</span>
+                </div>
               </el-button>
             </el-form-item>
           </template>

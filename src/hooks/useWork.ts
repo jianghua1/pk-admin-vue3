@@ -4,7 +4,7 @@ export function useWork() {
   const message = ref()
 
   const events = new Map()
-  const worker = new SharedWorker(new URL('@/utils/shared-worker.ts', import.meta.url))
+  const worker = new SharedWorker(new URL('@/utils/shared-worker.js', import.meta.url))
 
   worker.port.start()
 
@@ -13,7 +13,6 @@ export function useWork() {
   worker.port.onmessage = function (event) {
     const { type, id, eventName, data } = event.data
     if (type === 'connected') {
-      console.log('注册成功')
       localId.value = id
       routeIds.value[id] = route.fullPath
     } else {
@@ -47,8 +46,31 @@ export function useWork() {
     worker.port.postMessage({ type: 'broadcast', data })
   }
 
+  function off(eventName, handler) {
+    if (events.has(eventName)) {
+      const handlers = events.get(eventName)
+      handlers.delete(handler)
+      if (handlers.size === 0) {
+        events.delete(eventName)
+      }
+    }
+  }
+
+  const handleClose = () => {
+    worker.port.postMessage({ type: 'close' })
+  }
+
+  //添加关闭事件
+  window.addEventListener('beforeunload', handleClose)
+
   onUnmounted(() => {
-    // TODO 销毁event
+    events.forEach((handlers, eventName) => {
+      handlers.forEach((handler) => {
+        off(eventName, handler)
+      })
+    })
+    //移除关闭事件
+    window.removeEventListener('beforeunload', handleClose)
   })
 
   return {

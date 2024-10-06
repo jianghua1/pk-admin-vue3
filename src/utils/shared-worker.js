@@ -20,25 +20,36 @@ function broadcast(message, execludeId) {
   })
 }
 
+function getRouteIds() {
+  // { id: route }
+  const routeIds = Object.fromEntries(
+    Object.entries(connections).map(([id, { route }]) => [id, route])
+  )
+  return routeIds
+}
+
 onconnect = function (e) {
-  const port = e.ports[0] as MessagePort
+  const port = e.ports[0]
   const id = generatedUnqueId()
   connections[id] = { port, id }
 
   port.addEventListener('message', function (event) {
-    const { type, data, eventName } = event.data
+    const { type, eventName, data, route } = event.data
     if (type === 'emit') {
       broadcast({ eventName, data, formId: id }, id)
+    } else if (type === 'routeUpdate') {
+      connections[id].route = route
+      const routeIds = getRouteIds()
+      broadcast({ type: 'update', routeIds }, id)
+    } else if (type === 'close') {
+      delete connections[id]
+      const routeIds = getRouteIds()
+      broadcast({ type: 'update', routeIds }, id)
     } else {
       const sendData = type === 'broadcast' ? { eventName: 'message' } : {}
       broadcast({ ...event.data, ...sendData, formId: id }, id)
     }
   })
-
-  port.onclose = function () {
-    delete connections[id]
-    port.postMessage({ type: 'update', ids: Object.keys(connections) })
-  }
 
   port.postMessage({ type: 'connected', id, ids: Object.keys(connections) })
   port.start() // Required when using addEventListener. Otherwise called implicitly by onmessage setter.

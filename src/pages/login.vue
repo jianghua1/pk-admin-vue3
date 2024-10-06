@@ -12,6 +12,9 @@
 </template>
 
 <script setup lang='ts'>
+const worker = new SharedWorker(new URL('@/utils/shared-worker.ts',
+  import.meta.url));
+
 definePage({
   meta: {
     title: '',
@@ -20,6 +23,14 @@ definePage({
     position: 'center',
     backgroundImage: './bg.jpg'
   }
+})
+
+onMounted(() => {
+  worker.port.start()
+  //接收消息
+  setTimeout(() => {
+    worker.port.postMessage('from worker')
+  }, 5000)
 })
 </script>
 <style scoped lang="scss">

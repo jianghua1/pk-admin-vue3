@@ -83,6 +83,8 @@
 <script setup lang="tsx">
 import type { TabsPaneContext } from 'element-plus/es/components/tabs/src/constants';
 import type { VpTableColumnType } from 'el-admin-components'
+
+const worker = new SharedWorker(new URL('@/utils/shared-worker.ts', import.meta.url));
 definePage({
   meta: {
     title: 'pages.home',
@@ -174,10 +176,17 @@ const handlePageChange = (number) => {
   console.log('🚀 ~ file: index.vue:105 ~ handlePageChange ~ number:', number)
 }
 
-
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 }
+onMounted(() => {
+  worker.port.start()
+  //接收消息
+  worker.port.onmessage = (event) => {
+    console.log('🚀 ~ file: index.vue:111 ~ worker.port.onmessage ~ event:', event)
+  }
+
+})
 </script>
 
 <style scoped lang="scss">

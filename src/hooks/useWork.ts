@@ -17,7 +17,6 @@ export function useWork() {
       localId.value = id
       routeIds.value[id] = route.fullPath
     } else {
-      console.log('收到消息：', 11111)
       //往指定的事件名发送消息
       if (events.has(eventName)) {
         const handlers = events.get(eventName)
@@ -34,7 +33,6 @@ export function useWork() {
   }
   //发送消息
   function emit(eventName: string, data: any) {
-    console.log('我执行了2')
     worker.port.postMessage({ type: 'emit', eventName, data })
   }
 

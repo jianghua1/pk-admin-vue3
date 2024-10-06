@@ -13,8 +13,7 @@ function generatedUnqueId() {
  * @param {string[]} execludeIds - 排除的id
  */
 function broadcast(message, execludeId) {
-  console.log('connections', connections)
-  Object.keys(connections).forEach(({ port, id }) => {
+  Object.values(connections).forEach(({ port, id }) => {
     if (id !== execludeId) {
       port.postMessage(message)
     }
@@ -28,9 +27,7 @@ onconnect = function (e) {
 
   port.addEventListener('message', function (event) {
     const { type, data, eventName } = event.data
-    console.log('我执行了3')
     if (type === 'emit') {
-      console.log('我执行了3')
       broadcast({ eventName, data, formId: id }, id)
     } else {
       const sendData = type === 'broadcast' ? { eventName: 'message' } : {}

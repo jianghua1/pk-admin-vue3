@@ -1,6 +1,6 @@
 export function useWork() {
   const localId = ref('')
-  const routeIds = ref('')
+  const routeIds = ref({})
   const message = ref()
 
   const events = new Map()
@@ -13,9 +13,11 @@ export function useWork() {
   worker.port.onmessage = function (event) {
     const { type, id, eventName, data } = event.data
     if (type === 'connected') {
+      console.log('注册成功')
       localId.value = id
       routeIds.value[id] = route.fullPath
     } else {
+      console.log('收到消息：', 11111)
       //往指定的事件名发送消息
       if (events.has(eventName)) {
         const handlers = events.get(eventName)
@@ -32,10 +34,11 @@ export function useWork() {
   }
   //发送消息
   function emit(eventName: string, data: any) {
+    console.log('我执行了2')
     worker.port.postMessage({ type: 'emit', eventName, data })
   }
 
-  function on(eventName: string, handler: Function) {
+  function on(eventName: string, handler) {
     if (!events.has(eventName)) {
       events.set(eventName, new Set())
     }

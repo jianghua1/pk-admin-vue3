@@ -8,12 +8,13 @@
       <div class="text-3xl font-[500]">tomic 后台管理系统</div>
       <router-view></router-view>
     </div>
+    <el-button @click="handleClick2" type="primary">发送消息</el-button>
   </div>
 </template>
 
 <script setup lang='ts'>
-const worker = new SharedWorker(new URL('@/utils/shared-worker.ts',
-  import.meta.url));
+import { useWork } from '@/hooks/useWork';
+
 
 definePage({
   meta: {
@@ -25,12 +26,17 @@ definePage({
   }
 })
 
+const { on, emit, broadcast } = useWork()
+
+const handleClick2 = () => {
+  console.log('我执行了')
+  emit('/', '从login页面返送的消息')
+}
 onMounted(() => {
-  worker.port.start()
-  //接收消息
-  setTimeout(() => {
-    worker.port.postMessage('from worker')
-  }, 5000)
+
+  on('message', (data) => {
+    console.log('login 页面收到消息：', data);
+  })
 })
 </script>
 <style scoped lang="scss">

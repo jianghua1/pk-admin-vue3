@@ -76,6 +76,7 @@
       <div>广告位</div>
       <!-- 帮助 -->
       <div>帮助</div>
+      <el-button @click="handleClick2" type="primary">发送消息</el-button>
     </div>
   </div>
 </template>
@@ -83,8 +84,8 @@
 <script setup lang="tsx">
 import type { TabsPaneContext } from 'element-plus/es/components/tabs/src/constants';
 import type { VpTableColumnType } from 'el-admin-components'
+import { useWork } from '@/hooks/useWork';
 
-const worker = new SharedWorker(new URL('@/utils/shared-worker.ts', import.meta.url));
 definePage({
   meta: {
     title: 'pages.home',
@@ -175,16 +176,18 @@ const shortCuts = ref([
 const handlePageChange = (number) => {
   console.log('🚀 ~ file: index.vue:105 ~ handlePageChange ~ number:', number)
 }
-
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 }
+
+const { on, emit } = useWork()
+
+
 onMounted(() => {
-  worker.port.start()
-  //接收消息
-  worker.port.onmessage = (event) => {
-    console.log('🚀 ~ file: index.vue:111 ~ worker.port.onmessage ~ event:', event)
-  }
+
+  on('message', (data) => {
+    console.log('接收到消息', data)
+  })
 
 })
 </script>

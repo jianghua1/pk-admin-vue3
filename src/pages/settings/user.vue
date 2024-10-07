@@ -30,7 +30,6 @@
       </div>
       <!-- 表格 -->
       <VpTable :columns="fixedTableColumns" :data="fixedTableData" :pagination="pagination">
-
       </VpTable>
     </el-card>
   </div>
@@ -38,7 +37,9 @@
 
 <script setup lang='tsx'>
 import type { VpFormSchema, VpPaginationType, VpTableColumnType } from "el-admin-components"
-import type { FormItemInstance } from "element-plus"
+import type  {FormItemInstance } from "element-plus"
+import dayjs from 'dayjs'
+
 definePage({
   meta: {
     title: '用户管理',
@@ -160,45 +161,98 @@ const formItemRef = ref()
 
 const fixedTableColumns = ref([
   {
-    prop: 'date',
-    label: 'Date'
+    prop: 'index',
+    label: '#'
+  },
+  {
+    prop: 'username',
+    label: '用户名',
+     align: 'center'
   },
   {
     prop: 'name',
-    label: 'Name'
+    label: '昵称',
+     align: 'center'
   },
   {
-    prop: 'state',
-    label: 'State'
+    prop: 'type',
+    label: '用户类型',
+    align: 'center',
+    width:400,
+    defaultSlot: (scope) => {
+      const { row } = scope
+      const typeMap = {
+        0: { name: '普通用户', type: 'primay' },
+        1: { name: '运营人员', type: 'success' },
+        2: { name: '管理员', type: 'danger' },
+        3: {name: '会员', type: 'warning'}
+      }
+      if (Array.isArray(row.type)) {
+        return row.type.map((type) => (
+          <el-tag  class="mr-1" key={type} type={typeMap[type || 0].type || 'primay'}>{typeMap[type || 0].name}</el-tag>
+        ))
+      } else {
+        return <el-tag class="mr-1" type={typeMap[row.type || 0].type ||'primay'}>{typeMap[row.type||0].name}</el-tag>
+      }
+    }
+  }, {
+    prop: 'expired',
+    label: '过期时间',
+    align: 'center',
+    defaultSlot: (scope) => {
+      const { row } = scope
+      if (row.expired) {
+        return dayjs(row.expired).format('YYYY-MM-DD')
+      } else { 
+        return '-'
+      }
+    }
+  },
+{
+  prop: 'status',
+  label: '是否被禁用',
+  align: 'center',
+  defaultSlot: (scope) => {
+    const { row } = scope
+    const isEnabled = ref(row.status === 1) // 将数字转换为布尔值
+    return <el-switch style="--el-switch-on-color: var(--el-color-danger)" model-value={isEnabled.value} onUpdate:model-value={(val) => {
+      // 更新 row.status 值
+      row.status = val ? 1 : 0
+    }}></el-switch>
+  }
+},
+  {
+    prop: 'phone',
+    label: '手机号',
+    align: 'center'
   },
   {
-    prop: 'city',
-    label: 'City'
+    prop: 'email',
+    label: '电子邮箱',
+    align: 'center'
   },
   {
-    prop: 'address',
-    label: 'Address'
-  },
-  {
-    prop: 'zip',
-    label: 'Zip'
-  },
-  {
-    prop: 'tag',
-    label: 'Tag'
+    prop: 'wx',
+    label: (<i class="i-mdi:wechat text-2xl bg-gray-500"></i>),
+    align: 'center',
+    defaultSlot: (scope) => {
+      const { row } = scope
+      return row.wx ? (<i class="i-ep:circle-check-filled text-xl bg-green-500"></i>) : (<i class="i-ep:circle-close-filled text-xl bg-red-500"></i>)
+    }
   },
   {
     prop: '',
-    label: 'Operations',
+    label: '更多操作',
     width: 120,
+    align: 'center',
     fixed: 'right',
     defaultSlot: (_props) => (
       <>
         <el-button link type="primary" size="small" onClick={() => handleClick(_props)}>
-          Detail
+          编辑
         </el-button>
-        <el-button link type="primary" size="small">
-          Edit
+        <el-button link type="danger" size="small">
+          删除
         </el-button>
       </>
     )
@@ -207,40 +261,50 @@ const fixedTableColumns = ref([
 
 const fixedTableData = ref([
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home'
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office'
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office'
+    username: 'tomic',
+    name: 'tomic',
+    type: 0,
+    expired: '2022-01-01 00:00:00',
+    status: 0,
+    phone: '12345678900',
+    email: '12345678900@qq.com',
+    wx: true
+  }, {
+    username: 'tomic',
+    name: 'tomic',
+    type: 0,
+    expired: '2022-01-01 00:00:00',
+    status: 1,
+    phone: '12345678900',
+    email: '12345678900@qq.com',
+    wx: true
+  }, {
+    username: 'tomic',
+    name: 'tomic',
+    type: [1,2,3],
+    expired: '2022-01-01 00:00:00',
+    status: 0,
+    phone: '12345678900',
+    email: '12345678900@qq.com',
+    wx: false
+  }, {
+    username: 'tomic',
+    name: 'tomic',
+    type: 0,
+    expired: '2022-01-01 00:00:00',
+    status: 0,
+    phone: '12345678900',
+    email: '12345678900@qq.com',
+    wx: true
+  }, {
+    username: 'tomic',
+    name: 'tomic',
+    type: 0,
+    expired: '2022-01-01 00:00:00',
+    status: 0,
+    phone: '12345678900',
+    email: '12345678900@qq.com',
+    wx: true
   }
 ])
 

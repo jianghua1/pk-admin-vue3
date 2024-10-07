@@ -29,15 +29,31 @@
         </VpForm>
       </div>
       <!-- 表格 -->
-      <VpTable :columns="fixedTableColumns" :data="fixedTableData" :pagination="pagination">
+      <VpTable border :columns="fixedTableColumns" :data="fixedTableData" :pagination="pagination">
       </VpTable>
     </el-card>
+    <el-drawer v-model="drawer" :direction="direction">
+      <template #title>
+        <h4>{{ msg }}</h4>
+      </template>
+      <template #default>
+        <VpForm :label-width="120" :schema="addEditFormSchema" ref="addEditFormRef">
+        </VpForm>
+      </template>
+      <template #footer>
+        <div style="flex: auto">
+          <el-button @click="cancelClick">取消</el-button>
+          <el-button type="primary" @click="confirmClick">确定</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
 <script setup lang='tsx'>
 import type { VpFormSchema, VpPaginationType, VpTableColumnType } from "el-admin-components"
-import type  {FormItemInstance } from "element-plus"
+import type { FormItemInstance } from "element-plus"
+import { ElMessage, ElMessageBox } from 'element-plus'
 import dayjs from 'dayjs'
 
 definePage({
@@ -47,6 +63,118 @@ definePage({
     order: 100
   }
 })
+
+const drawer = ref(false)
+const direction = ref<'ltr' | 'rtl'>('rtl')
+const msg = ref('新增用户')
+
+const addEditFormSchema = ref<VpFormSchema>([
+  {
+    prop: 'username',
+    value: '',
+    label: '用户名',
+    span: 24,
+    type: 'input',
+    rules: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
+  },
+  {
+    prop: 'name',
+    value: '',
+    label: '昵称',
+    span: 24,
+    type: 'input'
+  },
+  {
+    prop: 'type',
+    value: '',
+    label: '角色',
+    span: 24,
+    type: 'select',
+    attrs: {
+      multiple: true
+    },
+    children: [
+      {
+        label: '普通用户',
+        value: 0
+      },
+      {
+        label: '运营人员',
+        value: 1
+      },
+      {
+        label: '管理员',
+        value: 2
+      },
+      {
+        label: '会员',
+        value: 3
+      }
+    ]
+  },
+  // {
+  //   prop: 'expired',
+  //   value: '',
+  //   span: 24,
+  //   type: 'date-picker',
+  //   label: '过期时间'
+  // },
+  {
+    type: 'radio-group',
+    prop: 'status',
+    label: '是否禁用',
+    value: 0,
+    span: 24,
+    children: [
+      {
+        type: 'radio',
+        label: '正常',
+        value: 0
+      },
+      {
+        type: 'radio',
+        label: '已禁用',
+        value: 1
+      }
+    ]
+  },
+  {
+    prop: 'password',
+    value: '',
+    label: '密码',
+    span: 24,
+    type: 'input',
+    attrs: {
+      type: 'password'
+    },
+    rules: [
+      { required: true, message: '密码不能为空', trigger: 'blur' },
+      // 密码需要6-32位的字符
+      { min: 6, max: 32, message: '密码格式不正确', trigger: 'blur' }
+    ]
+  },
+  {
+    prop: 'email',
+    value: '',
+    label: '邮箱',
+    span: 24,
+    type: 'input',
+    rules: [
+      // 密码需要6-32位的字符
+      // 邮箱的正则
+      { type: 'email', trigger: 'blur' }
+    ]
+  },
+  {
+    prop: 'phone',
+    value: '',
+    label: '手机号',
+    span: 24,
+    type: 'input',
+    // 手机号正则
+    rules: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }]
+  }
+])
 
 const schema = ref([
   {
@@ -248,16 +376,47 @@ const fixedTableColumns = ref([
     width: 120,
     align: 'center',
     fixed: 'right',
-    defaultSlot: (_props) => (
-      <>
-        <el-button link type="primary" size="small" onClick={() => handleClick(_props)}>
-          编辑
-        </el-button>
-        <el-button link type="danger" size="small">
-          删除
-        </el-button>
-      </>
-    )
+    defaultSlot: (scope) => { 
+      const { row} =scope
+      const handleDelete = () => { 
+        ElMessageBox.confirm(
+          `确定要删除${row.username}吗`,
+          '删除',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'error',
+            center: true,
+          })
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '删除成功',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '删除失败',
+            })
+          })
+      }
+
+      const handleEdit = () => { 
+        drawer.value = true
+        msg.value = '编辑用户'
+      }
+      return (
+        <>
+          <el-button link type="primary" size="small" onClick={handleEdit}>
+            编辑
+          </el-button>
+          <el-button link type="danger" size="small" onClick={handleDelete}>
+            删除
+          </el-button>
+        </>
+      )
+    }
   }
 ] as VpTableColumnType[])
 
@@ -325,5 +484,14 @@ const pagination = ref({
 const handleClick = (scope) => {
   console.log('🚀 ~ file: index.vue:37 ~ handleClick ~ scope:', scope)
 }
+
+const cancelClick = (scope) => {
+  console.log('🚀 ~ file: index.vue:37 ~ handleClick ~ scope:', scope)
+}
+
+const confirmClick = (scope) => {
+  console.log('🚀 ~ file: index.vue:37 ~ handleClick ~ scope:', scope)
+}
+
 </script>
 <style scoped></style>

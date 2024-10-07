@@ -1,11 +1,11 @@
 <template>
   <div class="bg-default">
     <el-card shadow="never" class="shadow">
-      <template #header>
+      <!-- <template #header>
         <div class="card-header">
           <span>用户管理</span>
         </div>
-      </template>
+      </template> -->
 
       <!-- 搜索 -->
       <div class="mb-4">
@@ -162,7 +162,9 @@ const formItemRef = ref()
 const fixedTableColumns = ref([
   {
     prop: 'index',
-    label: '#'
+    label: '#',
+    width: 60, // 可以设置列宽
+    fixed: 'left' // 固定在左边
   },
   {
     prop: 'username',
@@ -307,6 +309,8 @@ const fixedTableData = ref([
     wx: true
   }
 ])
+//添加序号
+fixedTableData.value = fixedTableData.value.map((item, index) => ({ ...item, index: index + 1 }))
 
 const pagination = ref({
   align: 'right',

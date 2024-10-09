@@ -254,44 +254,21 @@ const fixedTableColumns = ref([
     align: 'center',
     fixed: 'right',
     defaultSlot: (scope) => {
-      const { row } = scope
-      const handleDelete = () => {
-        ElMessageBox.confirm(
-          `确定要删除${row.username}吗`,
-          '删除',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'error',
-            center: true,
-          })
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '删除成功',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '删除失败',
-            })
-          })
-      }
+      const handleMore = () => {
 
-      const handleEdit = () => {
-        drawer.value = true
-        msg.value = '编辑用户'
       }
       return (
-        <>
-          <el-button link type="primary" size="small" onClick={handleEdit}>
-            编辑
-          </el-button>
-          <el-button link type="danger" size="small" onClick={handleDelete}>
-            删除
-          </el-button>
-        </>
+        <div class="vertical-middle flex items-center">
+          <el-tooltip class="box-item" effect="light" content="私信" placement="top-start">
+            <i class="i-ep:message text-xl bg-primary cursor-pointer mr-2"></i>
+          </el-tooltip>
+          <el-tooltip class="box-item" effect="light" content="禁言" placement="top-start">
+            <i class="i-tabler:message-off text-xl bg-error cursor-pointer mr-2"></i>
+          </el-tooltip>
+          <el-tooltip class="box-item" effect="light" content="更多信息" placement="top-start">
+            <i class="i-ep:warning-filled text-xl  cursor-pointer" onClick={handleMore}></i>
+          </el-tooltip>
+        </div>
       )
     }
   }

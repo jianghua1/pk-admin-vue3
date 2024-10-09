@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
@@ -24,6 +25,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     VpChangeLocale: (typeof import('el-admin-components'))['VpChangeLocale']
     VpDarkModeToggle: (typeof import('el-admin-components'))['VpDarkModeToggle']
+    VpDescription: typeof import('el-admin-components')['VpDescription']
     VpForm: typeof import('el-admin-components')['VpForm']
     VpHeader: typeof import('el-admin-components')['VpHeader']
     VpHeaderTabs: typeof import('el-admin-components')['VpHeaderTabs']

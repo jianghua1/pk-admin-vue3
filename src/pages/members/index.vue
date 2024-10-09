@@ -50,6 +50,8 @@ definePage({
     order: 100
   }
 })
+// 获取当前页面的路由信息
+const router = useRouter()
 
 // 统计数据
 const statisticsData = [
@@ -60,7 +62,6 @@ const statisticsData = [
   { label: '昨日付费', value: 2100 },
   { label: '累计付费', value: 100000 }
 ]
-
 const schema = ref([
   {
     prop: 'username',
@@ -244,7 +245,7 @@ const fixedTableColumns = ref([
     align: 'center',
     defaultSlot: (scope) => {
       const { row } = scope
-      return row.wx ? (<i class="i-ep:circle-check-filled text-xl bg-green-500"></i>) : (<i class="i-ep:circle-close-filled text-xl bg-red-500"></i>)
+      return row.status ? (<i class="i-ep:circle-check-filled text-xl bg-green-500"></i>) : (<i class="i-ep:circle-close-filled text-xl bg-red-500"></i>)
     }
   },
   {
@@ -254,8 +255,14 @@ const fixedTableColumns = ref([
     align: 'center',
     fixed: 'right',
     defaultSlot: (scope) => {
+      const { row } = scope
       const handleMore = () => {
-
+        router.push({
+          path: '/members/info',
+          query: {
+            id: row.id
+          }
+        })
       }
       return (
         <div class="vertical-middle flex items-center">
@@ -308,8 +315,6 @@ const fixedTableData = ref([
     wx: false
   }
 ])
-//添加序号
-fixedTableData.value = fixedTableData.value.map((item, index) => ({ ...item, index: index + 1 }))
 
 const pagination = ref({
   align: 'right',

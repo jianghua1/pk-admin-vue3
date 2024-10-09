@@ -1,5 +1,5 @@
-<!-- <template>
-  <div>{{ $route.query }}</div>
+<template>
+  <div>query: {{ $route.query }}</div>
 </template>
 
 <script setup lang='ts'>
@@ -9,4 +9,4 @@ definePage({
   }
 })
 </script>
-<style scoped></style> -->
+<style scoped></style>

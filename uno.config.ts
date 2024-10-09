@@ -15,10 +15,25 @@ export default defineConfig({
         'margin-bottom': 'env(safe-area-inset-bottom)',
         'margin-left': 'env(safe-area-inset-left)'
       }
+    ],
+    [
+      /^bg-img-\[(.+)\]$/,
+      ([, value]) => {
+        // 替换下划线为正常的路径分隔符
+        const path = value.replace(/_/g, '/')
+        return { 'background-image': `url(${path})` }
+      }
     ]
   ],
   shortcuts: {
-    'bg-default': 'bg-[var(--el-bg-color)]'
+    'bg-default': 'bg-[var(--el-bg-color)]',
+    'bg-info': 'bg-[var(--el-color-info)]',
+    'bg-primary': 'bg-[var(--el-color-primary)]',
+    'bg-success': 'bg-[var(--el-color-success)]',
+    'bg-warning': 'bg-[var(--el-color-warning)]',
+    'bg-error': 'bg-[var(--el-color-error)]',
+    // container默认背景与内边距
+    'container-default': 'bg-default rounded p-4'
   },
   presets: [
     presetWind(),

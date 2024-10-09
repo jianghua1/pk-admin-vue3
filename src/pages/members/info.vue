@@ -1,25 +1,35 @@
 <template>
   <!-- <div>query: {{ $route.query }}</div> -->
-  <div class="bg-default">
-    <div class="flex items-center">
-      <!-- 头像 -->
-      <el-avatar :size="50" src="/headers/1.jpeg" class="mr-4"></el-avatar>
-      <!-- 用户信息 -->
-      <div class="flex flex-col justify-start">
-        <!-- 昵称 -->
-        <div>
-          <span>jianghua同学</span>
-          <span class="ml-3">
-            <el-tag type="primary" size="small">普通用户</el-tag>
-          </span>
+  <div>
+    <div class="mb-4 container-default">
+      <div class="flex items-center">
+        <!-- 头像 -->
+        <el-avatar :size="50" src="/headers/1.jpeg" class="mr-4"></el-avatar>
+        <!-- 用户信息 -->
+        <div class="flex flex-col justify-start">
+          <!-- 昵称 -->
+          <div>
+            <span>jianghua同学</span>
+            <span class="ml-3">
+              <el-tag type="primary" size="small">普通用户</el-tag>
+            </span>
+          </div>
+          <!-- 地域信息 -->
+          <div class="text-sm text-gray-300 pt-3">湖北武汉</div>
+          <!-- 最后登录信息 -->
+          <div class="text-sm text-gray-400">最后登录时间：2022-10-10 10:10:10</div>
         </div>
-        <!-- 地域信息 -->
-        <div class="text-sm text-gray-300 pt-3">湖北武汉</div>
-        <!-- 最后登录信息 -->
-        <div class="text-sm text-gray-400">最后登录时间：2022-10-10 10:10:10</div>
       </div>
+      <VpDescription title="基础信息" border :column="2" :data="data"></VpDescription>
     </div>
-    <VpDescription title="基础信息" border :column="2" :data="data"></VpDescription>
+    <div class="container-default">
+      <el-tabs v-model:model-value="activeTag" class="demo-tabs">
+        <el-tab-pane label="购买记录" name="purchase">111</el-tab-pane>
+        <el-tab-pane label="学习情况" name="lessons">222</el-tab-pane>
+        <el-tab-pane label="用户评论" name="comments">333</el-tab-pane>
+        <el-tab-pane label="学分收支" name="points">444</el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 
@@ -44,5 +54,7 @@ const data = ref([{
   value: '2022-10-10 10:10:10'
 }
 ])
+
+const activeTag = ref('purchase')
 </script>
 <style scoped></style>

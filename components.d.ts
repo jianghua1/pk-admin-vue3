@@ -15,6 +15,7 @@ declare module 'vue' {
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElLink: (typeof import('element-plus/es'))['ElLink']
+    ElProgress: typeof import('element-plus/es')['ElProgress']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
@@ -32,5 +33,6 @@ declare module 'vue' {
     VpIconify: (typeof import('el-admin-components'))['VpIconify']
     VpMenu: typeof import('el-admin-components')['VpMenu']
     VpTable: typeof import('el-admin-components')['VpTable']
+    VpVueEcharts: typeof import('el-admin-components')['VpVueEcharts']
   }
 }

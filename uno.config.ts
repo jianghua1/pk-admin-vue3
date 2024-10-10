@@ -33,7 +33,9 @@ export default defineConfig({
     'bg-warning': 'bg-[var(--el-color-warning)]',
     'bg-error': 'bg-[var(--el-color-error)]',
     // container默认背景与内边距
-    'container-default': 'bg-default rounded p-4'
+    'container-default': 'bg-default rounded p-4',
+    'left-marker':
+      "relative pl-4 after:(content-[''] inline-block absolute left-0 top-0 w-[4px] h-[22px] bg-[var(--el-color-primary)])"
   },
   presets: [
     presetWind(),

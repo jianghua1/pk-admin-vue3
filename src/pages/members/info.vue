@@ -38,7 +38,10 @@
             <VpTable border :columns="columns" :data="tableData" :pagination="pagination">
             </VpTable>
           </el-tab-pane>
-          <el-tab-pane label="学习情况" name="lessons">222</el-tab-pane>
+          <el-tab-pane label="学习情况" name="lessons">
+            <div class="my-4 left-marker">学习数据情况</div>
+            <VpVueEcharts :option="options" autoresize :height="300"></VpVueEcharts>
+          </el-tab-pane>
           <el-tab-pane label="用户评论" name="comments">333</el-tab-pane>
           <el-tab-pane label="学分收支" name="points">444</el-tab-pane>
         </el-tabs>
@@ -50,6 +53,7 @@
 <script setup lang='tsx'>
 import type { VpPaginationType, VpTableColumnType } from "el-admin-components"
 import { calculateGrade } from '@/utils'
+import * as echarts from 'echarts';
 
 definePage({
   meta: {
@@ -209,5 +213,65 @@ const pagination = ref({
   pageSizes: [10, 20, 30, 40, 50, 100],
   total: 100
 } as VpPaginationType)
+
+
+const options = {
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: ['2024-01-01', '2024-01-02', '2024-01-03', '2024-01-04', '2024-01-05', '2024-01-06', '2024-01-07']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'line',
+      label: {
+        backgroundColor: '#6a7985'
+      }
+    },
+    formatter: function (params) {
+      params = params[0]
+      return `${params.name} : ${params.value}`
+    }
+  },
+  series: [
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: 'line',
+      lineStyle: {
+        width: 3,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(64,108,230)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(100,203,245)'
+          }
+        ])
+      },
+      areaStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgba(64,108,230, 0.3)'
+            },
+            {
+              offset: 1,
+              color: 'rgba(100,203,245, 0)'
+            }
+          ])
+        }
+      },
+      smooth: true
+    }
+  ]
+};
+
 </script>
 <style scoped></style>

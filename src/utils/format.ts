@@ -70,3 +70,8 @@ export function formatTime(seconds: number): string {
 
   return formattedTime
 }
+
+export function calculateGrade(score: number): string {
+  const grades = ['D', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A', 'A+']
+  return grades[Math.floor((score / 10) * 1)]
+}

@@ -23,9 +23,11 @@
         </div>
         <div class="flex flex-col text-2xl justify-end">
           <div class="flex mb-4 items-center">
-            <span>学生评级</span>
-            <span>E-</span>
+            <span class="mr-2 text-carnation-100">学生评级</span>
+            <span class="text-3xl font-bold text-right w-[60px]">{{ calculateGrade(percentage) }}</span>
           </div>
+          <el-progress :percentage="percentage" :color="customColors" :show-text="false" />
+          <div class="text-gray-400 text-sm">购买力+学习能力（仅供参考）</div>
         </div>
       </div>
       <VpDescription title="基础信息" border :column="2" :data="data"></VpDescription>
@@ -47,6 +49,8 @@
 
 <script setup lang='tsx'>
 import type { VpPaginationType, VpTableColumnType } from "el-admin-components"
+import { calculateGrade } from '@/utils'
+
 definePage({
   meta: {
     hideMenu: true
@@ -69,6 +73,22 @@ const data = ref([{
 ])
 
 const activeTag = ref('purchase')
+
+// 颜色进度条
+const customColors = ref([
+  { color: '#fef2f2', percentage: 10 },
+  { color: '#fde3e3', percentage: 20 },
+  { color: '#fdcbcb', percentage: 30 },
+  { color: '#faa7a7', percentage: 40 },
+  { color: '#f56c6c', percentage: 50 },
+  { color: '#ec4747', percentage: 60 },
+  { color: '#d92929', percentage: 70 },
+  { color: '#b61f1f', percentage: 80 },
+  { color: '#971d1d', percentage: 90 },
+  { color: '#7d1f1f', percentage: 100 }
+])
+
+const percentage = ref(10)
 
 const columns = ref([
   {

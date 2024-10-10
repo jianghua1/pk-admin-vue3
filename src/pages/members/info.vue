@@ -39,6 +39,15 @@
             </VpTable>
           </el-tab-pane>
           <el-tab-pane label="学习情况" name="lessons">
+            <!-- 统计信息 -->
+            <div class="grid grid-cols-4 gap-5">
+              <div class="border flex flex-col items-center justify-center py-4 rounded"
+                v-for="(item, index) in statisticsData"
+                :class="{ 'bg-gray-300': index % 2 === 0, 'bg-blue-200': index % 2 !== 0 }">
+                <div>{{ item.label }}</div>
+                <div>{{ item.value }}</div>
+              </div>
+            </div>
             <div class="my-4 left-marker">学习数据情况</div>
             <VpVueEcharts :option="options" autoresize :height="300"></VpVueEcharts>
           </el-tab-pane>
@@ -213,6 +222,13 @@ const pagination = ref({
   pageSizes: [10, 20, 30, 40, 50, 100],
   total: 100
 } as VpPaginationType)
+
+const statisticsData = [
+  { label: '今日学习时长（min）', value: 100 },
+  { label: '总学习时长（min）', value: 100 },
+  { label: '连续学习天数（天）', value: 100 },
+  { label: '已学习天数（天）', value: 100 }
+]
 
 
 const options = {

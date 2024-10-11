@@ -7,6 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CommentsCtrl: typeof import('./src/components/CommentsCtrl.vue')['default']
+    CommentsInfo: typeof import('./src/components/CommentsInfo.vue')['default']
+    CommentsItem: typeof import('./src/components/CommentsItem.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
@@ -29,6 +32,7 @@ declare module 'vue' {
     VpChangeLocale: (typeof import('el-admin-components'))['VpChangeLocale']
     VpDarkModeToggle: (typeof import('el-admin-components'))['VpDarkModeToggle']
     VpDescription: typeof import('el-admin-components')['VpDescription']
+    VpEditor: typeof import('el-admin-components')['VpEditor']
     VpForm: typeof import('el-admin-components')['VpForm']
     VpHeader: typeof import('el-admin-components')['VpHeader']
     VpHeaderTabs: typeof import('el-admin-components')['VpHeaderTabs']

@@ -1,14 +1,121 @@
-<!--  -->
 <template>
-  <div>query:{{ $route.query }}</div>
+  <div class="flex justify-center">
+    <!-- query:{{ $route.query }} -->
+    <!-- 快捷操作按钮 -->
+    <comments-ctrl class="flex justify-end"></comments-ctrl>
+    <!-- 评论列表 -->
+    <div class="min-w-[800px] mx-4 flex flex-col">
+      <comments-item class="mb-2 container-default shadow"></comments-item>
+      <comments-item class="mb-2 container-default shadow"></comments-item>
+      <comments-item class="mb-2 container-default shadow"></comments-item>
+
+      <VpEditor :schema="schema" v-model="value"></VpEditor>
+    </div>
+    <!-- 评论相关、用户信息 -->
+    <comments-info class="w-[300px] container-default"></comments-info>
+  </div>
 </template>
 
 <script setup lang='ts'>
+import type { VpFormSchema } from "el-admin-components"
+
 definePage({
   meta: {
     title: '评论详情',
     hideMenu: true
   }
 })
+
+const value = ref('')
+
+const schema = ref([
+  {
+    label: '模式',
+    prop: 'mode',
+    type: 'radio-group',
+    value: 'ir',
+    attrs: {
+      size: 'small'
+    },
+    children: [
+      {
+        type: 'radio-button',
+        label: 'WYSIWYG',
+        value: 'wysiwyg'
+      },
+      {
+        type: 'radio-button',
+        label: '即时渲染',
+        value: 'ir'
+      },
+      {
+        type: 'radio-button',
+        label: '分屏预览',
+        value: 'sv'
+      }
+    ],
+    colProps: {
+      xs: 24,
+      sm: 12,
+      md: 11
+    }
+  },
+  {
+    type: 'radio-group',
+    value: 'zh_CN',
+    label: '设置语言',
+    prop: 'lang',
+    attrs: {
+      size: 'small'
+    },
+    children: [
+      { type: 'radio-button', label: '中', value: 'zh_CN' },
+      { type: 'radio-button', label: '英', value: 'en_US' },
+      { type: 'radio-button', label: '繁', value: 'zh_TW' }
+    ]
+  },
+  {
+    type: 'input-number',
+    value: '400',
+    label: '设置高度',
+    prop: 'height',
+    attrs: {
+      size: 'small',
+      step: 10,
+      min: 400
+    },
+    colProps: {
+      xs: 24,
+      sm: 12,
+      md: 6
+    }
+  },
+  {
+    type: 'radio-group',
+    value: 'ant',
+    label: '图标设计',
+    prop: 'icon',
+    attrs: {
+      size: 'small'
+    },
+    children: [
+      {
+        type: 'radio-button',
+        label: 'Ant Design',
+        value: 'ant'
+      },
+      {
+        type: 'radio-button',
+        label: 'Material Design',
+        value: 'material'
+      }
+    ],
+    colProps: {
+      xs: 24,
+      sm: 12
+      // md: 12
+    }
+  }
+] as VpFormSchema)
 </script>
 <style scoped></style>

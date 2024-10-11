@@ -11,8 +11,7 @@
           <div class="flex flex-col justify-start">
             <!-- 昵称，角色标签 -->
             <div class="flex mb-4">
-              <span class="text-xl mr-4">toimc同学</span
-              ><span>
+              <span class="text-xl mr-4">toimc同学</span><span>
                 <el-tag type="primary" size="small">普通用户</el-tag>
               </span>
             </div>
@@ -34,40 +33,23 @@
           <div class="text-sm text-gray-300 mt-2">购买力+学习能力（供参考）</div>
         </div>
       </div>
-      <VpDescription
-        title="基础信息"
-        title-class="left-marker"
-        border
-        :column="2"
-        :data="data"
-      ></VpDescription>
+      <VpDescription title="基础信息" title-class="left-marker" border :column="2" :data="data"></VpDescription>
     </div>
     <div class="container-default">
       <el-tabs v-model="activeTag" class="demo-tabs">
         <el-tab-pane label="购买记录" name="purchase">
           <div class="mt-4">
-            <VpTable
-              stripe
-              border
-              :columns="columns"
-              :pagination="pagination"
-              :max-height="300"
-              :data="tableData"
-            >
+            <VpTable stripe border :columns="columns" :pagination="pagination" :max-height="300" :data="tableData">
             </VpTable>
           </div>
         </el-tab-pane>
         <el-tab-pane label="学习情况" name="lessons">
           <div class="grid grid-cols-4 gap-5">
             <!-- 用户数 -->
-            <div
-              :class="[
-                'flex flex-col text-xl justify-center items-center py-4 rounded border',
-                index % 2 === 0 ? 'bg-gray-100' : 'bg-[var(--el-color-primary-light-8)]'
-              ]"
-              v-for="(item, index) in items"
-              :key="index"
-            >
+            <div :class="[
+              'flex flex-col text-xl justify-center items-center py-4 rounded border',
+              index % 2 === 0 ? 'bg-gray-100' : 'bg-[var(--el-color-primary-light-8)]'
+            ]" v-for="(item, index) in items" :key="index">
               <div class="text-gray-400 text-base">{{ item.title }}</div>
               <div class="text-dark-300 font-bold">{{ item.value }}</div>
             </div>
@@ -78,27 +60,15 @@
         </el-tab-pane>
         <el-tab-pane label="用户评论" name="comments">
           <div class="mt-4">
-            <VpTable
-              stripe
-              border
-              :columns="commentsColumns"
-              :pagination="pagination"
-              :max-height="300"
-              :data="commentsData"
-            >
+            <VpTable stripe border :columns="commentsColumns" :pagination="pagination" :max-height="300"
+              :data="commentsData">
             </VpTable>
           </div>
         </el-tab-pane>
         <el-tab-pane label="学分收支" name="points">
           <div class="mt-4">
-            <VpTable
-              stripe
-              border
-              :columns="pointsColumns"
-              :pagination="pagination"
-              :max-height="300"
-              :data="pointsData"
-            >
+            <VpTable stripe border :columns="pointsColumns" :pagination="pagination" :max-height="300"
+              :data="pointsData">
             </VpTable>
           </div>
         </el-tab-pane>
@@ -114,7 +84,7 @@ import * as echarts from 'echarts'
 
 definePage({
   meta: {
-    title: 'page.members.info',
+    title: '会员详情',
     hideMenu: true
   }
 })

@@ -1,23 +1,23 @@
 <template>
   <div>
-    <div class="container-default flex flex-col items-center justify-start">
+    <div class="container-default flex flex-col">
       <el-tooltip effect="light" content="返回" placement="top-start">
-        <i class="i-ep:back mb-8 text-2xl cursor-pointer"></i>
+        <i class="i-solar:arrow-left-bold text-2xl cursor-pointer mb-8"></i>
       </el-tooltip>
       <el-tooltip effect="light" content="收藏" placement="top-start">
-        <i class="i-ep:star mb-8 text-2xl cursor-pointer"></i>
+        <i class="i-ep:star text-2xl cursor-pointer mb-8"></i>
       </el-tooltip>
       <el-tooltip effect="light" content="标签" placement="top-start">
-        <i class="i-ep:price-tag mb-8 text-2xl cursor-pointer"></i>
+        <i class="i-material-symbols-light:home-outline text-2xl cursor-pointer mb-8"></i>
       </el-tooltip>
       <el-tooltip effect="light" content="隐藏" placement="top-start">
-        <i class="i-ep:hide mb-8 text-2xl cursor-pointer"></i>
+        <i class="i-clarity:eye-hide-line text-2xl cursor-pointer mb-8"></i>
       </el-tooltip>
       <el-tooltip effect="light" content="禁言" placement="top-start">
-        <i class="i-mage:message-dots-round-cross mb-8 text-2xl cursor-pointer"></i>
+        <i class="i-iconoir:google-home text-2xl cursor-pointer mb-8"></i>
       </el-tooltip>
       <el-tooltip effect="light" content="删除" placement="top-start">
-        <i class="i-ep:delete text-2xl cursor-pointer"></i>
+        <i class="i-material-symbols-light:delete-rounded text-2xl cursor-pointer"></i>
       </el-tooltip>
     </div>
   </div>

@@ -29,7 +29,7 @@
         </VpForm>
       </div>
       <!-- 表格 -->
-      <VpTable border :columns="fixedTableColumns" :data="fixedTableData" :pagination="pagination">
+      <VpTable border :columns="fixedTableColumns" :data="fixedTableData" :pagination="pagination" :adaptive="80">
       </VpTable>
     </el-card>
     <el-drawer v-model="drawer" :direction="direction">

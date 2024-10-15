@@ -30,30 +30,33 @@
     </div>
     <!-- content -->
     <div :class="['relative w-full h-full flex-1 overflow-hidden']">
-      <div class="overflow-y-auto h-full">
-        <!-- header: fullscreen, darkmode, theme, menu -->
-        <VpHeader v-model:collapse="localSettings.collapse" :locales="locales" :username="username" :src="avatar"
-          :data="avatarMenu" :settings="settings" :show-collapse="!lockCollapse" @settings-change="handleSettigsChange"
-          @select="handleSelect">
-          <!-- menu：顶部左侧菜单混合 -->
-          <VpMenu v-if="settings?.mode === 'mix' || settings?.mode === 'top'" mode="horizontal"
-            :data="settings?.mode === 'mix' ? getTopMenus(menus) : menus" :collapse="false"
-            :active-text-color="settings?.theme" @select="handleSelect"></VpMenu>
-        </VpHeader>
-        <VpHeaderTabs v-if="settings?.showTabs" :data="tabsStore.tabs" @tab-click="handleTabClick"
-          @tab-remove="handleTabRemove" @tab-menu-click="handleTabMenuClick" v-model="tabsStore.current"></VpHeaderTabs>
+      <el-scrollbar>
+        <div>
+          <!-- header: fullscreen, darkmode, theme, menu -->
+          <VpHeader v-model:collapse="localSettings.collapse" :locales="locales" :username="username" :src="avatar"
+            :data="avatarMenu" :settings="settings" :show-collapse="!lockCollapse"
+            @settings-change="handleSettigsChange" @select="handleSelect">
+            <!-- menu：顶部左侧菜单混合 -->
+            <VpMenu v-if="settings?.mode === 'mix' || settings?.mode === 'top'" mode="horizontal"
+              :data="settings?.mode === 'mix' ? getTopMenus(menus) : menus" :collapse="false"
+              :active-text-color="settings?.theme" @select="handleSelect"></VpMenu>
+          </VpHeader>
+          <VpHeaderTabs v-if="settings?.showTabs" :data="tabsStore.tabs" @tab-click="handleTabClick"
+            @tab-remove="handleTabRemove" @tab-menu-click="handleTabMenuClick" v-model="tabsStore.current">
+          </VpHeaderTabs>
+        </div>
         <!-- router-view -->
-        <div :class="['p-2 bg', contentClass]">
+        <div :class="['bg', contentClass]">
           <el-scrollbar>
             <Transition :name="camelToHyphen(settings?.transition || 'fade') + '-transition'" mode="out-in">
               <router-view v-slot="{ Component }" v-if="$route.meta.keepAlive">
                 <keep-alive :key="settings?.transition">
-                  <component :is="Component" :key="$route.fullPath" class="rounded bg-default shadow p-4">
+                  <component :is="Component" :key="$route.fullPath" class="rounded p-2 h-full">
                   </component>
                 </keep-alive>
               </router-view>
               <router-view v-slot="{ Component }" v-else>
-                <component :is="Component" :key="$route.fullPath" class="rounded bg-default shadow p-4">
+                <component :is="Component" :key="$route.fullPath" class="rounded p-2 h-full">
                 </component>
               </router-view>
             </Transition>
@@ -65,7 +68,7 @@
       </KeepAlive>
     </transition> -->
         </div>
-      </div>
+      </el-scrollbar>
       <!-- <el-scrollbar>
       </el-scrollbar> -->
       <!-- <div class="overflow-y-auto h-full">
@@ -232,6 +235,24 @@ useResizeObserver(document.body, (entries) => {
 })
 
 // 内容区域class
+// const contentClass = computed(() => {
+//   let cls = 'flex flex-col'
+//   if (settings.value?.fixedHead) {
+//     if (settings.value?.showTabs) {
+//       cls += 'h-[calc(100%-90px)]'
+//     } else {
+//       cls += 'h-[calc(100%-50px)]'
+//     }
+//   } else {
+//     if (settings.value?.showTabs) {
+//       cls += 'min-h-[calc(100%-90px)]'
+//     } else {
+//       cls += 'min-h-[calc(100%-50px)]'
+//     }
+//   }
+//   return cls
+// })
+
 const contentClass = computed(() => {
   if (settings.value?.fixedHead) {
     if (settings.value?.showTabs) {

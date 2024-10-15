@@ -41,6 +41,12 @@ declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
+    '/contents': RouteRecordInfo<'/contents', '/contents', Record<never, never>, Record<never, never>>,
+    '/contents/': RouteRecordInfo<'/contents/', '/contents', Record<never, never>, Record<never, never>>,
+    '/contents/files': RouteRecordInfo<'/contents/files', '/contents/files', Record<never, never>, Record<never, never>>,
+    '/contents/notes': RouteRecordInfo<'/contents/notes', '/contents/notes', Record<never, never>, Record<never, never>>,
+    '/contents/pages': RouteRecordInfo<'/contents/pages', '/contents/pages', Record<never, never>, Record<never, never>>,
+    '/contents/tags': RouteRecordInfo<'/contents/tags', '/contents/tags', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
     '/login/reg': RouteRecordInfo<'/login/reg', '/login/reg', Record<never, never>, Record<never, never>>,

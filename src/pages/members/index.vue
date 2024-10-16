@@ -10,7 +10,7 @@
           <div>{{ item.value }}</div>
         </div>
       </div>
-      <!-- 表格 -->
+      <!-- 表头 -->
       <div class="my-4">
         <VpForm :schema="schema" ref="formItemRef">
           <template #actions>

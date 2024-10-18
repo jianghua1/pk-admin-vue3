@@ -14,30 +14,32 @@
         </div>
         <!-- 付费信息 -->
       </div>
-      <!-- 会员列表信息 -->
-      <div class="my-4">
-        <el-button>
-          <div class="flex">
-            <i class="i-ep:refresh mr-1"> </i>
-            <span>重置筛选</span>
-          </div>
-        </el-button>
-        <!-- 表格 -->
-        <VpTable stripe border :columns="columns" :pagination="pagination" :max-height="300" :data="tableData">
-          <template #footer-actions>
-            <el-button type="primary">全选</el-button>
-            <el-button>取消全选</el-button>
-            <el-button>批量删除</el-button>
-            <el-button>批量设置</el-button>
+
+    </div>
+    <div class="container-default mt-2">
+      <div class="flex items-center">
+        <el-button type="success">新增章节
+          <template #icon>
+            <i class="i-ep:plus text-2xl"></i>
           </template>
-        </VpTable>
+        </el-button>
       </div>
+      <!-- 表格 -->
+      <VpTable stripe border :columns="columns" :pagination="pagination" :max-height="300" :data="tableData">
+        <template #footer-actions>
+          <el-button type="primary">全选</el-button>
+          <el-button>取消全选</el-button>
+          <el-button>批量删除</el-button>
+          <el-button>批量设置</el-button>
+        </template>
+      </VpTable>
     </div>
   </div>
 </template>
 
 <script setup lang='tsx'>
 import type { VpTableColumnType } from 'el-admin-components';
+import dayjs from 'dayjs';
 
 definePage({
   meta: {
@@ -48,7 +50,7 @@ definePage({
 const items = ref([
   {
     title: '已上架视频/未上架',
-    value: '1000/20'
+    value: '100/20'
   },
   {
     title: '视频时长',

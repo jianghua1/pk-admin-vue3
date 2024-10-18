@@ -20,12 +20,27 @@ export const useTabsStore = defineStore('tabs', {
       if (this.title) {
         route.meta.title = this.title
       }
-      if (this.tabs.some((item) => item.name === route.name || item.path === route.path)) return
+      if (
+        this.tabs.some((item) => {
+          let flag = false
+          if (item.fullPath) {
+            if (item.fullPath === route.fullPath) {
+              flag = true
+            }
+          } else {
+            if (item.path === route.path) {
+              flag = true
+            }
+          }
+          return flag
+        })
+      )
+        return
       this.tabs.push({ ...route })
       this.title = ''
     },
     removeRoute(path: string) {
-      this.tabs = this.tabs.filter((item) => item.name !== path)
+      this.tabs = this.tabs.filter((item) => (item.fullPath || item.path) !== path)
     }
   },
   persist: true

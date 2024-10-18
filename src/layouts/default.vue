@@ -285,7 +285,7 @@ watch(
   route,
   () => {
     tabsStore.addRoute(route)
-    tabsStore.current = route.name as string
+    tabsStore.current = route.fullPath || route.name as string
   },
   {
     immediate: true
@@ -297,8 +297,12 @@ const handleSettigsChange = (themeSettings: VpThemeSettingsProps) => {
 }
 
 const handleSelect = (item: VpAppRouteMenuItem) => {
-  if (item && item.name) {
-    router.push(item.name as string)
+  if (item) {
+    if (item.fullPath) {
+      router.push(item.fullPath as string)
+    } else {
+      router.push({ name: item.name })
+    }
     if (isMobile.value) localSettings.collapse = true
   }
 }
@@ -306,7 +310,11 @@ const handleSelect = (item: VpAppRouteMenuItem) => {
 const handleTabClick = (tab) => {
   const { index } = tab
   const route = tabsStore.tabs[index]
-  router.push(route.name as string)
+  if (route.fullPath) {
+    router.push(route.fullPath as string)
+  } else {
+    router.push({ name: route.name })
+  }
 }
 
 const handleTabRemove = (tab) => {

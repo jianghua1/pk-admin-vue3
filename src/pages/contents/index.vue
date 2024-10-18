@@ -295,7 +295,7 @@ const columns = ref([
       const { row } = scope
       const handleMore = () => {
         router.push({
-          path: '/members/info',
+          path: '/contents/content-detail',
           query: {
             id: row.id
           }

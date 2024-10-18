@@ -45,7 +45,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import dayjs from 'dayjs'
 definePage({
   meta: {
-    title: '会员管理',
+    title: '我的用户',
     icon: 'ri:vip-line',
     order: 100
   }

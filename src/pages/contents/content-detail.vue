@@ -40,6 +40,7 @@
 <script setup lang='tsx'>
 import type { VpTableColumnType } from 'el-admin-components';
 import dayjs from 'dayjs';
+import { useTabsStore } from '@/store/tabs';
 
 definePage({
   meta: {
@@ -67,6 +68,7 @@ const items = ref([
 ])
 
 const router = useRouter()
+const store = useTabsStore()
 
 const pagination = ref({
   align: 'right',
@@ -160,7 +162,7 @@ const columns = ref([
             level: '2'
           }
         })
-        scope.title = '这是一个新的标题1'
+        store.title = '这是一个新的标题1'
       }
       return (
         <div class="vertical-middle flex items-center">

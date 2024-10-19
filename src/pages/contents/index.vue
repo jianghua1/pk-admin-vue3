@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 表头 -->
-    <div class="my-4">
+    <div class="container-default">
       <VpForm :schema="schema" ref="formItemRef" :gutter="20">
         <template #actions>
           <div class="flex justify-between">
@@ -13,7 +13,7 @@
                     <span>筛选课程</span>
                   </div>
                 </el-button>
-                <el-button type="info">
+                <el-button>
                   <div class="flex">
                     <i class="i-ep:search mr-l"></i>
                     <span>重置筛选</span>
@@ -22,20 +22,35 @@
               </el-form-item>
             </div>
             <div>
-              <el-button type="info">
+              <el-button type="primary">
                 <div class="flex">
                   <i class="i-ep:search mr-l"></i>
-                  <span>重置筛选</span>
+                  <span>创建课程</span>
                 </div>
               </el-button>
             </div>
           </div>
         </template>
       </VpForm>
+      <!-- 表格 -->
+      <VpTable border :columns="columns" :data="fixedTableData" :pagination="pagination">
+      </VpTable>
     </div>
-    <!-- 表格 -->
-    <VpTable border :columns="columns" :data="fixedTableData" :pagination="pagination">
-    </VpTable>
+    <el-drawer v-model="drawer" :direction="direction" @close="handleClose">
+      <template #header>
+        <h4>{{ msg }}</h4>
+      </template>
+      <template #default>
+        <VpForm v-model="model" :label-width="80" :schema="addEditFormSchema" ref="addEditFormRef">
+        </VpForm>
+      </template>
+      <template #footer>
+        <div style="flex: auto">
+          <el-button @click="cancelClick">取消</el-button>
+          <el-button type="primary" @click="confirmClick">确定</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
@@ -50,6 +65,51 @@ definePage({
     order: 100
   }
 })
+
+const drawer = ref(false)
+const direction = ref<'ltr' | 'rtl'>('rtl')
+const msg = ref('新增用户')
+const model = ref()
+const addEditFormRef = ref()
+
+const addEditFormSchema = ref<VpFormSchema>([
+  {
+    prop: 'name',
+    value: '',
+    label: '课程名称',
+    span: 24,
+    type: 'input'
+  },
+  {
+    prop: 'desc',
+    value: '',
+    label: '课程描述',
+    span: 24,
+    type: 'input',
+    attrs: {
+      type: 'textarea',
+      rows: 3,
+      'show-word-limit': true,
+      maxlength: 250,
+      minlength: 0
+    }
+  },
+  {
+    prop: 'image',
+    value: [],
+    label: '课程封面',
+    span: 24,
+    type: 'upload',
+    attrs: {
+      action: '/dev/upload'
+      // drag: true,
+      // multiple: false,
+      // limit: 1,
+      // accept: 'image/*',
+      // class: 'w-full'
+    }
+  }
+])
 
 // 获取当前页面的路由信息
 const router = useRouter()
@@ -301,8 +361,14 @@ const columns = ref([
           }
         })
       }
+      const handleEdit = () => {
+        drawer.value = true
+      }
       return (
         <div class="vertical-middle flex items-center">
+          <el-tooltip class="box-item" effect="light" content="编辑" placement="top-start">
+            <i class="i-ep:edit text-xl cursor-pointer mr-2" onClick={handleEdit}></i>
+          </el-tooltip>
           <el-tooltip class="box-item" effect="light" content="私信" placement="top-start">
             <i class="i-ep:message text-xl bg-primary cursor-pointer mr-2"></i>
           </el-tooltip>
@@ -343,6 +409,23 @@ const pagination = ref({
   total: 100
 } as VpPaginationType)
 
+const addCourse = () => {
+  drawer.value = true
+}
+
+const cancelClick = () => {
+  drawer.value = false
+}
+
+const confirmClick = () => {
+  console.log('model.value:', model.value)
+}
+
+const handleClose = () => {
+  if (addEditFormRef.value) {
+    addEditFormRef.value.resetFields()
+  }
+}
 </script>
 
 <style scoped></style>

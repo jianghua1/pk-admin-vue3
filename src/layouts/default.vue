@@ -210,10 +210,12 @@ const mixMenuWidth = computed(() => {
 
 const tmpWidth = ref(0)
 const changeWidthFlag = ref(false)
-useResizeObserver(document.body, (entries) => {
+
+window.addEventListener('risize', () => {
+  const width = window.innerWidth
   document.documentElement.style.setProperty('--body-height', `${window.innerHeight}px`)
 
-  const { width } = entries[0].contentRect
+  // const { width } = entries[0].contentRect
   if (tmpWidth.value === 0) {
     tmpWidth.value = width
   }

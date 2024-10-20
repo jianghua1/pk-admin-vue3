@@ -71,6 +71,7 @@ const direction = ref<'ltr' | 'rtl'>('rtl')
 const msg = ref('新增用户')
 const model = ref()
 const addEditFormRef = ref()
+const uploadRef = ref()
 
 const addEditFormSchema = ref<VpFormSchema>([
   {
@@ -111,8 +112,8 @@ const addEditFormSchema = ref<VpFormSchema>([
     slots: {
       defaultSlot: () => <el-button type="success">111</el-button>,
       tipSlot: () => <div class="tips text-sm text-gray-300">支持jpg/png文件 文件大小5M以内</div>
-    }
-
+    },
+    childRef: (ref) => uploadRef.value = ref
   }
 ])
 
@@ -423,7 +424,9 @@ const cancelClick = () => {
 }
 
 const confirmClick = () => {
-  console.log('model.value:', model.value)
+  if (uploadRef.value.clearFiles) {
+    uploadRef.value.clearFiles()
+  }
 }
 
 const handleClose = () => {

@@ -1,8 +1,10 @@
 import type { MockMethod } from 'vite-plugin-mock'
 import fs from 'fs'
 import path from 'path'
+import { filterUrl } from './_utils'
+
 // test.ts
-export default [
+export default filterUrl([
   {
     url: '/api/get',
     method: 'get',
@@ -46,4 +48,4 @@ export default [
       })
     }
   }
-] as MockMethod[]
+]) as MockMethod[]

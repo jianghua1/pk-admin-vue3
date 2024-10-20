@@ -4,20 +4,18 @@
     "env.d.ts",
     "src/**/*",
     "src/**/*.vue",
-    "typed-router.d.ts",
-    "auto-imports.d.ts",
     "components.d.ts",
+    "auto-imports.d.ts",
+    "typed-router.d.ts",
     "mock/**/*.ts"
   ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "moduleResolution": "node",
-    "types": ["element-plus/global"],
+    "paths": { "@/*": ["./src/*"] },
+    "moduleResolution": "Bundler",
+    "types": ["element-plus/global", "unplugin-vue-router/client"],
     "noImplicitAny": false
   }
 }

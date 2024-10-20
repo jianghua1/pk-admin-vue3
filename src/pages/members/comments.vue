@@ -257,7 +257,7 @@ const columns = ref([
       )
       const handleMore = () => {
         router.push({
-          path: '/members/comments-detail',
+          path: '/members/comment-detail',
           query: {
             id: row.id
           }

@@ -2,12 +2,14 @@
   <router-view></router-view>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 definePage({
   meta: {
-    title: '系统设置',
-    icon: 'mdi:settings'
+    title: 'pages.settings.default',
+    icon: 'ep:tools',
+    order: 1000
   }
 })
 </script>
+
 <style scoped></style>

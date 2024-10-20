@@ -7,15 +7,22 @@
         </VpChangeLocale>
       </el-row>
     </div> -->
-    <div v-if="settings.bg" :class="[
-      'bg-center bg-cover w-full lg:w-1/3 xl:w-1/2 h-screen position-absolute top-0 z--1',
-      settings.position === 'right' ? 'left-0' : 'right-0',
-      settings.position === 'center' ? 'w-full!' : ''
-    ]" :style="bgStyle" ref="bgRef"></div>
+    <div
+      v-if="settings.bg"
+      :class="[
+        'bg-center bg-cover w-full lg:w-1/3 xl:w-1/2 h-screen position-absolute top-0 z--1 ',
+        settings.position === 'right' ? 'left-0' : 'right-0',
+        settings.position === 'center' ? 'w-full!' : ''
+      ]"
+      :style="bgStyle"
+      ref="bgRef"
+    ></div>
     <div class="flex flex-col items-center justify-center h-screen" :style="marginStyle">
       <div :class="['self-center bg-white dark:bg-dark rounded p-4', formClass]" ref="formRef">
         <!-- title -->
-        <div class="text-2xl mb-10">{{ $t(settings.title) }}</div>
+        <div class="text-2xl mb-10">
+          <!-- {{ $t(settings.title) }} -->
+        </div>
         <router-view></router-view>
       </div>
     </div>

@@ -5,7 +5,7 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: '交易管理',
+    title: 'pages.order.default',
     icon: 'ep:money',
     order: 700
   }

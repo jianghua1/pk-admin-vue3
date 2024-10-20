@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+// 页面在初始化 worker 的时候，会传入一个 id 与 name
 const connections = {}
 let nextId = 0
 
@@ -6,12 +7,8 @@ function generatedUnqueId() {
   return `id-${nextId++}`
 }
 
-/**
- * Broadcast a message to all ports in the connections object, except for the ports specified in the execludeIds array.
- *
- * @param {any} message - 收到的消息
- * @param {string[]} execludeIds - 排除的id
- */
+// 广播消息
+// message - 消息内容，excludeId - 排除的 id
 function broadcast(message, execludeId) {
   Object.values(connections).forEach(({ port, id }) => {
     if (id !== execludeId) {
@@ -33,23 +30,25 @@ onconnect = function (e) {
   const id = generatedUnqueId()
   connections[id] = { port, id }
 
-  port.addEventListener('message', function (event) {
+  // port.onmessage
+  port.onmessage = function (event) {
     const { type, eventName, data, route } = event.data
     if (type === 'emit') {
-      broadcast({ eventName, data, formId: id }, id)
+      broadcast({ eventName, data, fromId: id }, id)
     } else if (type === 'routeUpdate') {
       connections[id].route = route
+      // 通知其他页面
       const routeIds = getRouteIds()
       broadcast({ type: 'update', routeIds }, id)
-    } else if (type === 'close') {
+    } else if (type == 'close') {
       delete connections[id]
       const routeIds = getRouteIds()
       broadcast({ type: 'update', routeIds }, id)
     } else {
       const sendData = type === 'broadcast' ? { eventName: 'message' } : {}
-      broadcast({ ...event.data, ...sendData, formId: id }, id)
+      broadcast({ ...event.data, ...sendData, fromId: id }, id)
     }
-  })
+  }
 
   port.postMessage({ type: 'connected', id, ids: Object.keys(connections) })
   port.start() // Required when using addEventListener. Otherwise called implicitly by onmessage setter.

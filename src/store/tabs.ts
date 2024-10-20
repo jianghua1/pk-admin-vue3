@@ -43,5 +43,7 @@ export const useTabsStore = defineStore('tabs', {
       this.tabs = this.tabs.filter((item) => (item.fullPath || item.path) !== path)
     }
   },
+  // 1. timestamp -> new timestamp => 7-30
+  // 2. package.json -> version -> localStorage
   persist: true
 })

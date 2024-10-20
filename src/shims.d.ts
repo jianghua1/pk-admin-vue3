@@ -1,3 +1,10 @@
+declare interface Window {
+  onloadTurnstileCallback: () => void
+}
+
+declare const initGeetest4: import('@/components/verification/types').initType
+declare const turnstile: any
+
 declare module '*.vue' {
   import { type DefineComponent } from 'vue'
 

@@ -1,29 +1,52 @@
 <template>
-  <div class="position-absolute left-0 top-0 w-full h-full overflow-hidden flex"
-    :style="{ '--el-color-primary': settings?.theme }">
+  <div
+    class="position-absolute left-0 top-0 w-full h-full overflow-hidden flex"
+    :style="{ '--el-color-primary': settings?.theme }"
+  >
     <!-- 左右布局 -->
     <!-- sidebar -->
-    <div :style="{
-      width: mixMenuWidth,
-      backgroundColor: settings?.backgroundColor
-    }" class="h-full transition-width shrink-0" v-if="settings?.mode !== 'top'">
+    <div
+      :style="{
+        width: mixMenuWidth,
+        backgroundColor: settings?.backgroundColor
+      }"
+      class="h-full transition-width shrink-0"
+      v-if="settings?.mode !== 'top'"
+    >
       <el-row class="h-full">
-        <el-scrollbar v-if="settings?.mode !== 'mix'"
-          :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']" :style="{
+        <el-scrollbar
+          v-if="settings?.mode !== 'mix'"
+          :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']"
+          :style="{
             backgroundColor:
               settings?.mode !== 'mixbar' ? 'auto' : darken(settings?.backgroundColor, 0.2)
-          }">
+          }"
+        >
           <!-- menu: 左侧 左侧菜单混合 -->
-          <VpMenu v-if="settings?.mode === 'siderbar' || settings?.mode === 'mixbar'" text-color="#b8b8b8"
-            :class="[{ mixbar: settings?.mode === 'mixbar' }]" :data="mixMenus"
-            :collapse="settings?.mode !== 'mixbar' && localSettings.collapse" :background-color="settings?.mode !== 'mixbar' ? settings?.backgroundColor : 'transparent'
-              " :active-text-color="settings?.theme" @select="handleSelect"></VpMenu>
+          <VpMenu
+            v-if="settings?.mode === 'siderbar' || settings?.mode === 'mixbar'"
+            text-color="#b8b8b8"
+            :class="[{ mixbar: settings?.mode === 'mixbar' }]"
+            :data="mixMenus"
+            :collapse="settings?.mode !== 'mixbar' && localSettings.collapse"
+            :background-color="
+              settings?.mode !== 'mixbar' ? settings?.backgroundColor : 'transparent'
+            "
+            :active-text-color="settings?.theme"
+            @select="handleSelect"
+          ></VpMenu>
         </el-scrollbar>
         <!-- menu二级菜单：左侧菜单混合，顶部左侧菜单混合-->
         <el-scrollbar v-if="settings?.mode === 'mixbar' || settings?.mode === 'mix'" class="flex-1">
           <!-- menu -->
-          <VpMenu text-color="#b8b8b8" :data="getSubMenus(menus)" :collapse="localSettings.collapse"
-            :background-color="settings?.backgroundColor" :active-text-color="settings?.theme" @select="handleSelect">
+          <VpMenu
+            text-color="#b8b8b8"
+            :data="getSubMenus(menus)"
+            :collapse="localSettings.collapse"
+            :background-color="settings?.backgroundColor"
+            :active-text-color="settings?.theme"
+            @select="handleSelect"
+          >
           </VpMenu>
         </el-scrollbar>
       </el-row>
@@ -33,30 +56,51 @@
       <el-scrollbar>
         <div>
           <!-- header: fullscreen, darkmode, theme, menu -->
-          <VpHeader v-model:collapse="localSettings.collapse" :locales="locales" :username="username" :src="avatar"
-            :data="avatarMenu" :settings="settings" :show-collapse="!lockCollapse"
-            @settings-change="handleSettigsChange" @select="handleSelect">
+          <VpHeader
+            v-model:collapse="localSettings.collapse"
+            :locales="locales"
+            :username="username"
+            :src="avatar"
+            :data="avatarMenu"
+            :settings="settings"
+            :show-collapse="!lockCollapse"
+            @settings-change="handleSettigsChange"
+            @select="handleSelect"
+          >
             <!-- menu：顶部左侧菜单混合 -->
-            <VpMenu v-if="settings?.mode === 'mix' || settings?.mode === 'top'" mode="horizontal"
-              :data="settings?.mode === 'mix' ? getTopMenus(menus) : menus" :collapse="false"
-              :active-text-color="settings?.theme" @select="handleSelect"></VpMenu>
+            <VpMenu
+              v-if="settings?.mode === 'mix' || settings?.mode === 'top'"
+              mode="horizontal"
+              :data="settings?.mode === 'mix' ? getTopMenus(menus) : menus"
+              :collapse="false"
+              :active-text-color="settings?.theme"
+              @select="handleSelect"
+            ></VpMenu>
           </VpHeader>
-          <VpHeaderTabs v-if="settings?.showTabs" :data="tabsStore.tabs" @tab-click="handleTabClick"
-            @tab-remove="handleTabRemove" @tab-menu-click="handleTabMenuClick" v-model="tabsStore.current">
-          </VpHeaderTabs>
+          <VpHeaderTabs
+            v-if="settings?.showTabs"
+            :data="tabsStore.tabs"
+            @tab-click="handleTabClick"
+            @tab-remove="handleTabRemove"
+            @tab-menu-click="handleTabMenuClick"
+            v-model="tabsStore.current"
+          ></VpHeaderTabs>
         </div>
         <!-- router-view -->
         <div :class="['bg', contentClass]">
           <el-scrollbar>
-            <Transition :name="camelToHyphen(settings?.transition || 'fade') + '-transition'" mode="out-in">
+            <Transition
+              :name="camelToHyphen(settings?.transition || 'fade') + '-transition'"
+              mode="out-in"
+            >
               <router-view v-slot="{ Component }" v-if="$route.meta.keepAlive">
                 <keep-alive :key="settings?.transition">
-                  <component :is="Component" :key="$route.fullPath" class="rounded p-2 h-full">
+                  <component :is="Component" :key="$route.fullPath" :class="['rounded p-2']">
                   </component>
                 </keep-alive>
               </router-view>
               <router-view v-slot="{ Component }" v-else>
-                <component :is="Component" :key="$route.fullPath" class="rounded p-2 h-full">
+                <component :is="Component" :key="$route.fullPath" :class="['rounded p-2 h-full']">
                 </component>
               </router-view>
             </Transition>
@@ -76,24 +120,41 @@
       </div> -->
     </div>
     <!-- drawer -->
-    <el-drawer direction="ltr" class="w-full!" :style="{ backgroundColor: settings?.backgroundColor }" v-if="isMobile"
-      :model-value="!localSettings.collapse" @close="localSettings.collapse = true">
+    <el-drawer
+      direction="ltr"
+      class="w-full!"
+      :style="{ backgroundColor: settings?.backgroundColor }"
+      v-if="isMobile"
+      :model-value="!localSettings.collapse"
+      @close="localSettings.collapse = true"
+    >
       <!-- menu: 左侧 左侧菜单混合 -->
-      <VpMenu text-color="#b8b8b8" :data="menus" :background-color="settings?.backgroundColor"
-        :active-text-color="settings?.theme" @select="handleSelect"></VpMenu>
+      <VpMenu
+        text-color="#b8b8b8"
+        :data="menus"
+        :background-color="settings?.backgroundColor"
+        :active-text-color="settings?.theme"
+        @select="handleSelect"
+      ></VpMenu>
     </el-drawer>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { RouteRecordRaw } from 'vue-router/auto'
-import type { VpHeaderProps, VpThemeSettingsProps, VpDropDownMenuItem, VpAppRouteMenuItem } from 'el-admin-components'
-import { routes } from 'vue-router/auto/routes'
+import type { RouteRecordRaw } from 'vue-router'
+import type {
+  VpHeaderProps,
+  VpThemeSettingsProps,
+  VpDropDownMenuItem,
+  VpAppRouteMenuItem
+} from 'el-admin-components'
+import { routes } from 'vue-router/auto-routes'
 // import { useMenu } from 'el-admin-components'
 import { darken, camelToHyphen } from '@/utils'
 import { ElScrollbar } from 'element-plus'
 import { useTabsStore } from '../store/tabs'
 // import { TabActions } from '@/components/Layouts/const'
+import { useUserStore } from '../store/user'
 
 enum TabActions {
   closeOthers = 'closeOthers',
@@ -101,7 +162,6 @@ enum TabActions {
   closeRight = 'closeRight',
   closeAll = 'closeAll'
 }
-
 
 interface ThemeSettingsOption extends VpHeaderProps {
   username: string
@@ -116,6 +176,7 @@ const route = useRoute()
 const router = useRouter()
 
 const tabsStore = useTabsStore()
+const userStore = useUserStore()
 
 const localSettings = reactive<ThemeSettingsOption>({
   // 折叠菜单
@@ -165,7 +226,25 @@ function generateMenuData(routes: RouteRecordRaw[]): VpAppRouteMenuItem[] {
 
 const { getTopMenus, getSubMenus } = useMenu()
 
-const menus = computed(() => generateMenuData(routes))
+const menus = computed(() => {
+  const tempMenu = generateMenuData(routes)
+  if (userStore.allRoutes) return tempMenu
+  // 菜单权限
+  // 限制用户访问菜单
+  const arr = [] as VpAppRouteMenuItem[]
+  for (const item of tempMenu) {
+    if (userStore.routes.includes(item.path)) {
+      if (item.children && item.children.length > 0) {
+        item.children = item.children.filter(
+          (child) => userStore.routes.includes(child.path) || child.path === ''
+        )
+      }
+      arr.push(item)
+    }
+  }
+  return arr
+})
+
 const settings = computed(() => localSettings.settings)
 // 混合菜单
 const mixMenus = computed(() =>
@@ -211,9 +290,10 @@ const mixMenuWidth = computed(() => {
 const tmpWidth = ref(0)
 const changeWidthFlag = ref(false)
 
-window.addEventListener('risize', () => {
+// 监听窗口变化
+window.addEventListener('resize', () => {
   const width = window.innerWidth
-  document.documentElement.style.setProperty('--body-height', `${window.innerHeight}px`)
+  // document.documentElement.style.setProperty('--body-height', `${window.innerHeight}px`)
 
   // const { width } = entries[0].contentRect
   if (tmpWidth.value === 0) {
@@ -237,38 +317,22 @@ window.addEventListener('risize', () => {
 })
 
 // 内容区域class
-// const contentClass = computed(() => {
-//   let cls = 'flex flex-col'
-//   if (settings.value?.fixedHead) {
-//     if (settings.value?.showTabs) {
-//       cls += 'h-[calc(100%-90px)]'
-//     } else {
-//       cls += 'h-[calc(100%-50px)]'
-//     }
-//   } else {
-//     if (settings.value?.showTabs) {
-//       cls += 'min-h-[calc(100%-90px)]'
-//     } else {
-//       cls += 'min-h-[calc(100%-50px)]'
-//     }
-//   }
-//   return cls
-// })
-
 const contentClass = computed(() => {
+  let cls = 'flex flex-col '
   if (settings.value?.fixedHead) {
     if (settings.value?.showTabs) {
-      return 'h-[calc(100%-90px)]'
+      cls += 'h-[calc(100%-90px)]'
     } else {
-      return 'h-[calc(100%-50px)]'
+      cls += 'h-[calc(100%-50px)]'
     }
   } else {
     if (settings.value?.showTabs) {
-      return 'min-h-[calc(100%-90px)]'
+      cls += 'min-h-[calc(100%-90px)]'
     } else {
-      return 'min-h-[calc(100%-50px)]'
+      cls += 'min-h-[calc(100%-50px)]'
     }
   }
+  return cls
 })
 
 onBeforeMount(() => {
@@ -287,7 +351,7 @@ watch(
   route,
   () => {
     tabsStore.addRoute(route)
-    tabsStore.current = route.fullPath || route.name as string
+    tabsStore.current = route.fullPath || (route.name as string)
   },
   {
     immediate: true

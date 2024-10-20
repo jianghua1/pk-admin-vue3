@@ -1,48 +1,50 @@
 <template>
   <div>
-    <el-card>
+    <div class="container-default">
       <!-- 统计信息 -->
       <div class="grid grid-cols-6 gap-5">
-        <div class="border flex flex-col items-center justify-center py-4 rounded"
-          v-for="(item, index) in statisticsData"
-          :class="{ 'bg-gray-300': index % 2 === 0, 'bg-blue-200': index % 2 !== 0 }">
-          <div>{{ item.label }}</div>
-          <div>{{ item.value }}</div>
+        <!-- 用户数 -->
+        <div :class="[
+          'flex flex-col text-xl justify-center items-center py-4 rounded border',
+          index % 2 === 0 ? 'bg-gray-100' : 'bg-[var(--el-color-primary-light-8)]'
+        ]" v-for="(item, index) in items" :key="index">
+          <div class="text-gray-400 text-base">{{ item.title }}</div>
+          <div class="text-dark-300 font-bold">{{ item.value }}</div>
         </div>
+        <!-- 付费信息 -->
       </div>
-      <!-- 表头 -->
+      <!-- 会员列表信息 -->
       <div class="my-4">
-        <VpForm :schema="schema" ref="formItemRef">
+        <VpForm :schema="schema">
           <template #actions>
             <el-form-item>
               <el-button type="primary">
                 <div class="flex">
-                  <i class="i-ep:plus mr-l"></i>
-                  <span>新增用户</span>
+                  <i class="i-ep:search mr-1"> </i>
+                  <span>查询用户</span>
                 </div>
               </el-button>
-              <el-button type="info">
+              <el-button>
                 <div class="flex">
-                  <i class="i-ep:search mr-l"></i>
-                  <span>查&nbsp;&nbsp;询</span>
+                  <i class="i-ep:refresh mr-1"> </i>
+                  <span>重置筛选</span>
                 </div>
               </el-button>
             </el-form-item>
           </template>
         </VpForm>
+        <!-- 表格 -->
+        <VpTable stripe border :columns="columns" :pagination="pagination" :max-height="300" :data="tableData">
+        </VpTable>
       </div>
-      <!-- 表格 -->
-      <VpTable border :columns="fixedTableColumns" :data="fixedTableData" :pagination="pagination">
-      </VpTable>
-    </el-card>
+    </div>
   </div>
 </template>
 
-<script setup lang='tsx'>
-import type { VpFormSchema, VpPaginationType, VpTableColumnType } from "el-admin-components"
-import type { FormItemInstance } from "element-plus"
-import { ElMessage, ElMessageBox } from 'element-plus'
+<script setup lang="tsx">
+import type { VpFormSchema } from 'el-admin-components'
 import dayjs from 'dayjs'
+
 definePage({
   meta: {
     title: '我的用户',
@@ -50,44 +52,66 @@ definePage({
     order: 100
   }
 })
-// 获取当前页面的路由信息
+
 const router = useRouter()
 
-// 统计数据
-const statisticsData = [
-  { label: '普通用户', value: 1000 },
-  { label: '付费用户', value: 100 },
-  { label: '新增用户', value: 100 },
-  { label: '新增会员', value: 100 },
-  { label: '昨日付费', value: 2100 },
-  { label: '累计付费', value: 100000 }
-]
+const items = ref([
+  {
+    title: '普通用户',
+    value: 1000
+  },
+  {
+    title: '付费用户',
+    value: 100
+  },
+  {
+    title: '新增用户',
+    value: 100
+  },
+  {
+    title: '新增会员',
+    value: 100
+  },
+  {
+    title: '昨日付费',
+    value: '2,100'
+  },
+  {
+    title: '累计付费',
+    value: '100,000'
+  }
+])
+
 const schema = ref([
   {
-    prop: 'username',
+    prop: 'id',
     value: '',
-    label: '用户名',
-    span: 6,
+    label: 'id',
+    span: 4,
     type: 'input',
-    itemRef: (ref: FormItemInstance) => {
-      formItemRef.value = ref
-    }
+    class: 'mr-4'
+  },
+  {
+    prop: 'name',
+    value: '',
+    label: '昵称',
+    span: 4,
+    type: 'input',
+    class: 'mr-4'
   },
   {
     prop: 'email',
     value: '',
     label: '邮箱',
-    colProps: {
-      span: 6,
-      class: 'mx-4'
-    },
-    type: 'input'
+    span: 4,
+    type: 'input',
+    class: 'mr-4'
   },
   {
     prop: 'role',
-    span: 6,
     value: '',
     label: '用户角色',
+    span: 6,
     type: 'select',
     attrs: {
       multiple: true
@@ -95,15 +119,11 @@ const schema = ref([
     children: [
       {
         label: '普通用户',
-        value: 'user'
+        value: 0
       },
       {
-        label: '运营人员',
-        value: 'operator'
-      },
-      {
-        label: '管理员',
-        value: 'manager'
+        label: '付费用户',
+        value: 3
       }
     ]
   },
@@ -134,7 +154,7 @@ const schema = ref([
       },
       {
         span: 11,
-        type: 'time-picker',
+        type: 'date-picker',
         prop: 'date2',
         value: '',
         label: '',
@@ -148,111 +168,147 @@ const schema = ref([
     ]
   },
   {
-    type: 'radio-group',
-    prop: 'resource',
-    label: '是否禁用',
-    colProps: {
-      span: 6,
-      class: 'mx-4'
-    },
-    value: '',
-    children: [
+    prop: '',
+    label: '消费金额',
+    class: 'ml-4',
+    schema: [
       {
-        type: 'radio',
-        label: '正常',
-        value: 1
+        span: 11,
+        prop: 'low',
+        value: '',
+        type: 'input',
+        label: '',
+        attrs: {
+          placeholder: '',
+          style: {
+            width: '100%'
+          }
+        }
       },
       {
-        type: 'radio',
-        label: '已禁用',
-        value: 2
+        span: 2,
+        value: '-',
+        attrs: {
+          class: 'text-center w-full'
+        }
+      },
+      {
+        span: 11,
+        type: 'input',
+        prop: 'high',
+        value: '',
+        label: '',
+        attrs: {
+          placeholder: '',
+          style: {
+            width: '100%'
+          }
+        }
       }
     ]
   }
+  // ] as any)
 ] as VpFormSchema)
 
-const formItemRef = ref()
+const pagination = ref({
+  align: 'right',
+  small: false,
+  background: false,
+  layout: 'total, sizes, prev, pager, next, jumper',
+  pagerCount: 7,
+  pageSizes: [10, 20, 30, 40, 50, 100],
+  total: 100
+} as any)
 
-const fixedTableColumns = ref([
+const columns = ref([
   {
     type: 'selection',
-    width: 60,
-    align: 'center',
-    fixed: 'left'
+    align: 'center'
   },
   {
     prop: 'id',
     label: 'Id',
-    align: 'center'
+    align: 'center',
+    width: 60
   },
   {
     prop: 'name',
     label: '昵称',
-    align: 'center'
+    width: 120
   },
   {
     prop: 'email',
-    label: '电子邮箱',
-    align: 'center'
+    label: '邮箱',
+    width: 120
   },
   {
     prop: 'type',
     label: '用户类型',
     align: 'center',
-    width: 400,
+    width: 200,
     defaultSlot: (scope) => {
-      const { row } = scope
+      const {
+        row: { type }
+      } = scope
+      if (typeof type === 'undefined') return
       const typeMap = {
         0: { name: '普通用户', type: 'primay' },
-        1: { name: '运营人员', type: 'success' },
-        2: { name: '管理员', type: 'danger' },
         3: { name: '会员', type: 'warning' }
       }
-      if (Array.isArray(row.type)) {
-        return row.type.map((type) => (
-          <el-tag class="mr-1" key={type} type={typeMap[type || 0].type || 'primay'}>{typeMap[type || 0].name}</el-tag>
-        ))
-      } else {
-        return <el-tag class="mr-1" type={typeMap[row.type || 0].type || 'primay'}>{typeMap[row.type || 0].name}</el-tag>
-      }
+      let result
+      result = type.map((item) => (
+        <el-tag class="mr-1" type={typeMap[item].type || 'primary'}>
+          {typeMap[item].name}
+        </el-tag>
+      ))
+      return result
     }
-  }, {
-    prop: 'expired',
+  },
+  {
+    prop: 'lastLoginTime',
     label: '最近登录时间',
     align: 'center',
     defaultSlot: (scope) => {
-      const { row } = scope
-      if (row.expired) {
-        return dayjs(row.expired).format('YYYY-MM-DD HH:mm:ss')
+      const {
+        row: { lastLoginTime }
+      } = scope
+      if (lastLoginTime) {
+        return dayjs(lastLoginTime).format('YYYY-MM-DD HH:mm:ss')
       } else {
         return '-'
       }
     }
   },
   {
-    prop: 'phone',
+    prop: 'lessons',
     label: '购买课程',
-    align: 'center'
+    align: 'center',
+    width: 100
   },
   {
-    prop: 'phone2',
+    prop: 'hours',
     label: '学时',
-    align: 'center'
+    align: 'center',
+    width: 120
   },
   {
     prop: 'status',
     label: '状态',
     align: 'center',
+    width: 80,
     defaultSlot: (scope) => {
       const { row } = scope
-      return row.status ? (<i class="i-ep:circle-check-filled text-xl bg-green-500"></i>) : (<i class="i-ep:circle-close-filled text-xl bg-red-500"></i>)
+      return row.status ? (
+        <i class="i-ep:circle-close-filled text-xl vertical-middle bg-error"></i>
+      ) : (
+        <i class="i-ep:circle-check-filled text-xl vertical-middle bg-success"></i>
+      )
     }
   },
   {
     prop: '',
     label: '更多操作',
-    width: 120,
-    align: 'center',
+    width: 130,
     fixed: 'right',
     defaultSlot: (scope) => {
       const { row } = scope
@@ -279,51 +335,40 @@ const fixedTableColumns = ref([
       )
     }
   }
-] as VpTableColumnType[])
+] as any[])
 
-const fixedTableData = ref([
+const tableData = ref([
   {
     id: 1,
-    name: 'tomic',
-    type: 0,
-    expired: '2022-01-01 00:00:00',
-    status: 0,
-    phone: 1,
-    phone2: 50,
-    email: '12345678900@qq.com',
-    wx: true
-  }, {
+    name: 'admin',
+    email: '123@qq.com',
+    type: [0],
+    lastLoginTime: '2022-01-01 00:00:00',
+    lessons: 1,
+    hours: 10,
+    status: 0
+  },
+  {
     id: 1,
-    username: 'tomic',
-    name: 'tomic',
-    type: 0,
-    status: 1,
-    phone: 1,
-    phone2: 50,
-    email: '12345678900@qq.com',
-    wx: true
-  }, {
+    name: 'admin1',
+    email: '1233@qq.com',
+    type: [0],
+    lastLoginTime: '',
+    lessons: 3,
+    hours: 120,
+    status: 0
+  },
+  {
     id: 1,
-    username: 'tomic',
-    name: 'tomic',
-    type: [1, 2, 3],
-    expired: '2022-01-01 00:00:00',
-    status: 0,
-    phone: 1,
-    phone2: 50,
-    email: '12345678900@qq.com',
-    wx: false
+    name: 'admin2',
+    email: '1234@qq.com',
+    type: [3],
+    lastLoginTime: '2022-01-01 00:00:00',
+    lessons: 3,
+    hours: 15,
+    status: 0
   }
 ])
-
-const pagination = ref({
-  align: 'right',
-  small: false,
-  background: false,
-  layout: 'total, sizes, prev, pager, next, jumper',
-  pagerCount: 7,
-  pageSizes: [10, 20, 30, 40, 50, 100],
-  total: 100
-} as VpPaginationType)
 </script>
+
 <style scoped></style>

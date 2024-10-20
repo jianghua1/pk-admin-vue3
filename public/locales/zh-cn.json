@@ -1,0 +1,111 @@
+{
+  "components": {
+    "audio-player": "音频播放器",
+    "cancel": "取消",
+    "choose-icon": "选中的图标",
+    "copy-icon": "复制Icon组件",
+    "copy-icon-name": "复制Icon名称",
+    "copy-svg": "复制SVG图标",
+    "hide-text": "隐藏文字",
+    "icon-lists": "图标列表",
+    "icon-picker": "选择图标",
+    "show-text": "显示文字",
+    "submit": "确定",
+    "video-player": "视频播放器"
+  },
+  "message": {
+    "copy-success": "复制成功"
+  },
+  "pages": {
+    "not-found": "页面未找到",
+    "contents": {
+      "default": "内容管理",
+      "all": "我的内容",
+      "notes": "课程笔记",
+      "files": "附件管理",
+      "pages": "页面管理",
+      "tags": "内容分类",
+      "content-detail": "内容详情",
+      "add-edit-form": "新增/编辑"
+    },
+    "settings": {
+      "default": "系统设置",
+      "user-management": "用户管理",
+      "role-management": "角色管理",
+      "permission-management": "权限管理",
+      "log-management": "日志管理",
+      "menus": "菜单管理"
+    },
+    "members": {
+      "default": "会员管理",
+      "users": "我的用户",
+      "info": "用户详情",
+      "comments": "用户评论",
+      "messages": "用户私信",
+      "comments-detail": "评论详情",
+      "message-detail": "私信详情"
+    },
+    "promotion": {
+      "default": "促销管理",
+      "vouchers": "红包",
+      "coupons": "卡券",
+      "links": "推广链接",
+      "rewords": "奖励管理"
+    },
+    "marketing": {
+      "default": "分销管理",
+      "distributors": "分销商",
+      "commision": "佣金管理",
+      "services": "客户支持"
+    },
+    "tenant": {
+      "default": "租户设置",
+      "group": "租户分组",
+      "license": "许可证授权",
+      "price": "定价与计费"
+    },
+    "order": {
+      "default": "交易管理",
+      "order-management": "订单管理",
+      "my-wallet": "我的钱包"
+    },
+    "about": "关于我们",
+    "components": "组件示例",
+    "directive": {
+      "copy": "复制指令v-copy",
+      "debounce-throttle": "防抖与节流指令",
+      "drag": "拖拽指令v-draggable",
+      "flash": "打字机效果指令v-flash",
+      "longpress": "长按指令v-longPress",
+      "scrollText": "滚动文字指令scrollText",
+      "watermark": "水印指令v-watermark"
+    },
+    "directives": "自定义指令",
+    "display": {
+      "avatars": "头像列表",
+      "default": "展示类型组件",
+      "description": "折叠描述面板"
+    },
+    "editors": "编辑器",
+    "form-basic": "基础表单",
+    "forms": "表单组件",
+    "head-message": "消息通知",
+    "home": "首页",
+    "icons": "图标示例",
+    "login": {
+      "default": "注册登录",
+      "index": "登录首页",
+      "reg": "注册",
+      "forgot": "忘记密码",
+      "code": "验证码",
+      "password": "请输入密码",
+      "phone": "请输入手机号",
+      "remember": "记住账号",
+      "repassword": "请再次输入密码",
+      "sign-up": "注册账号",
+      "submit": "登录",
+      "username": "请输入用户名",
+      "welcome": "欢迎回来"
+    }
+  }
+}

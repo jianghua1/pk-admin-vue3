@@ -26,7 +26,7 @@
             <span class="mr-2 text-carnation-100">学生评级</span>
             <span class="text-3xl font-bold text-center w-[60px]">{{
               calculateGrade(percentage)
-            }}</span>
+              }}</span>
           </div>
           <!-- 进度条 -->
           <el-progress :percentage="percentage" :color="customColors" :show-text="false" />

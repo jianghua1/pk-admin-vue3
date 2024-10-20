@@ -1,0 +1,111 @@
+{
+  "components": {
+    "audio-player": "components.audio-player",
+    "cancel": "Cancel",
+    "choose-icon": "Selected Icon",
+    "copy-icon": "Copy Icon",
+    "copy-icon-name": "Copy Icon Name",
+    "copy-svg": "Copy SVG",
+    "hide-text": "Hide Text",
+    "icon-lists": "Icon Lists",
+    "icon-picker": "Pick Icon",
+    "show-text": "Show Text",
+    "submit": "Submit",
+    "video-player": "components.video-player"
+  },
+  "message": {
+    "copy-success": "Copy Success!"
+  },
+  "pages": {
+    "not-found": "Page Not Found",
+    "contents": {
+      "default": "Contents",
+      "all": "Courses",
+      "notes": "Notes",
+      "files": "Attachments",
+      "pages": "Site Editor",
+      "tags": "Tags",
+      "content-detail": "ContentDetail",
+      "add-edit-form": "AddEditForm"
+    },
+    "settings": {
+      "default": "Settings",
+      "user-management": "Users",
+      "role-management": "Roles",
+      "permission-management": "Permissions",
+      "log-management": "Logs",
+      "menus": "Menus"
+    },
+    "members": {
+      "default": "MemberShip",
+      "users": "Users",
+      "info": "User Info",
+      "comments": "Comments",
+      "messages": "Messages",
+      "comments-detail": "CommentsDetail",
+      "message-detail": "MessageDetail"
+    },
+    "promotion": {
+      "default": "Promotion",
+      "vouchers": "Vouchers",
+      "coupons": "Coupons",
+      "links": "Links",
+      "rewords": "Rewards"
+    },
+    "marketing": {
+      "default": "Marketing",
+      "distributors": "Distributors",
+      "commision": "Commision",
+      "services": "Services"
+    },
+    "tenant": {
+      "default": "Tenant",
+      "group": "Groups",
+      "license": "License",
+      "price": "Price"
+    },
+    "order": {
+      "default": "Orders",
+      "order-management": "MyOrders",
+      "my-wallet": "MyWallet"
+    },
+    "about": "AboutUs",
+    "components": "Components",
+    "directive": {
+      "copy": "v-copy",
+      "debounce-throttle": "v-debounce&v-throttle",
+      "drag": "v-draggable",
+      "flash": "v-flash",
+      "longpress": "v-longpress",
+      "scrollText": "v-scrollText",
+      "watermark": "v-watermark"
+    },
+    "directives": "Directives",
+    "display": {
+      "avatars": "Avatars",
+      "default": "Display Components",
+      "description": "pages.display.description"
+    },
+    "editors": "pages.editors",
+    "form-basic": "Basic Form",
+    "forms": "Forms",
+    "head-message": "Head Messages",
+    "home": "Home",
+    "icons": "Icons",
+    "login": {
+      "default": "Login",
+      "index": "LoginPage",
+      "reg": "Register",
+      "forgot": "Forgot Password",
+      "code": "Sms Code",
+      "password": "Password",
+      "phone": "Phone Number",
+      "remember": "Remember Me",
+      "repassword": "RePassword",
+      "sign-up": "Sign Up",
+      "submit": "Login",
+      "username": "Username",
+      "welcome": "Welcome"
+    }
+  }
+}

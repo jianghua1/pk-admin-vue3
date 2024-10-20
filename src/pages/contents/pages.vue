@@ -5,7 +5,7 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: '页面管理',
+    title: 'pages.contents.pages',
     icon: 'ep:monitor',
     order: 900
   }

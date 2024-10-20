@@ -5,7 +5,7 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: 'pages.contents.notes',
+    title: '携程笔记',
     icon: 'ep:notebook',
     order: 200
   }

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="container-default mb-2">
+    <div class="container-default">
       <div class="left-marker mb-2">章节详情</div>
-      <!-- 章节统计信息 -->
+      <!-- 统计信息 -->
       <div class="grid grid-cols-4 gap-5">
+        <!-- 用户数 -->
         <div :class="[
           'flex flex-col text-xl justify-center items-center py-4 rounded border',
           index % 2 === 0 ? 'bg-gray-100' : 'bg-[var(--el-color-primary-light-8)]'
@@ -11,18 +12,19 @@
           <div class="text-gray-400 text-base">{{ item.title }}</div>
           <div class="text-dark-300 font-bold">{{ item.value }}</div>
         </div>
+        <!-- 付费信息 -->
       </div>
+
     </div>
-    <!-- 章节列表 -->
-    <div class="container-default">
-      <div class="flex items-center mb-2">
-        <el-button type="primary" @click="addContent">
-          新增章节
+    <div class="container-default mt-2">
+      <div class="flex items-center">
+        <el-button type="success">新增章节
           <template #icon>
             <i class="i-ep:plus text-2xl"></i>
           </template>
         </el-button>
       </div>
+      <!-- 表格 -->
       <VpTable stripe border :columns="columns" :pagination="pagination" :max-height="300" :data="tableData">
         <template #footer-actions>
           <el-button type="primary">全选</el-button>
@@ -35,28 +37,17 @@
   </div>
 </template>
 
-<script setup lang="tsx">
-import dayjs from 'dayjs'
-import type { VpTableColumnType } from 'el-admin-components'
-import { useTabsStore } from '@/store/tabs'
+<script setup lang='tsx'>
+import type { VpTableColumnType } from 'el-admin-components';
+import dayjs from 'dayjs';
+import { useTabsStore } from '@/store/tabs';
+
 definePage({
   meta: {
     title: '内容详情',
     hideMenu: true
   }
 })
-
-const store = useTabsStore()
-
-const router = useRouter()
-
-// TODO
-const addContent = () => {
-  router.push({
-    path: '/contents/add-edit-form'
-  })
-}
-
 const items = ref([
   {
     title: '已上架视频/未上架',
@@ -76,7 +67,9 @@ const items = ref([
   }
 ])
 
-// 表格的内容
+const router = useRouter()
+const store = useTabsStore()
+
 const pagination = ref({
   align: 'right',
   small: false,
@@ -200,13 +193,13 @@ const tableData = ref([
     name: '第一章',
     desc: '第一章的简介',
     courses: 10,
-    guide: 0,
+    attachments: 20,
+    guide: 1,
     created: '2022-11-11',
-    students: 0,
+    students: 100,
     creator: 'admin',
     status: 1
   }
 ])
 </script>
-
 <style scoped></style>

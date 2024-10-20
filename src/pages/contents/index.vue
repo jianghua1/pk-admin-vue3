@@ -102,15 +102,19 @@ const addEditFormSchema = ref<VpFormSchema>([
     span: 24,
     type: 'upload',
     attrs: {
-      action: '/dev/upload'
-      // drag: true,
-      // multiple: false,
+      action: '/dev/upload',
+      drag: true,
+      multiple: false,
       // limit: 1,
-      // accept: 'image/*',
-      // class: 'w-full'
+      accept: 'image/*',
+      class: 'w-full'
     },
     slots: {
-      defaultSlot: () => <el-button type="success">111</el-button>,
+      defaultSlot: () =>
+        <div class="flex flex-col items-center text-gray-400">
+          <i class="i-ep:upload-filled text-2xl"></i>
+          <div>拖拽上传或<el-link type="primary" size="small">点击上传</el-link></div>
+        </div>,
       tipSlot: () => <div class="tips text-sm text-gray-300">支持jpg/png文件 文件大小5M以内</div>
     },
     childRef: (ref) => uploadRef.value = ref

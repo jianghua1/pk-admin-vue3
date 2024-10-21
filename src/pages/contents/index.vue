@@ -60,6 +60,8 @@ import type { VpFormSchema, VpPaginationType, VpTableColumnType } from "el-admin
 import { ElMessage } from "element-plus"
 import { useToggle } from '@vueuse/core'
 import dayjs from 'dayjs'
+import UploadTrigger from '@/components/contents/upload/UploadTrigger.vue'
+import FilePreview from '@/components/contents/upload/FilePreview.vue'
 
 definePage({
   meta: {
@@ -126,11 +128,7 @@ const addEditFormSchema = ref<VpFormSchema>([
       }
     },
     slots: {
-      defaultSlot: () => (
-        <div class="flex flex-col items-center text-gray-400">
-          <i class="i-ep:upload-filled text-2xl"></i>
-          <div>拖拽上传或<el-link type="primary" size="small">点击上传</el-link></div>
-        </div>),
+      defaultSlot: () => <UploadTrigger></UploadTrigger>,
       tipSlot: () => <div class="tips text-sm text-gray-300">支持jpg/png文件 文件大小5M以内</div>,
       fileSlot: ({ file }) => {
         const raw = file.raw as File
@@ -147,26 +145,7 @@ const addEditFormSchema = ref<VpFormSchema>([
           toggle(true)
         }
 
-        return (
-          <div>
-            <div class="relative group w-full h-auto rounded border overflow-hidden">
-              <img src={src} alt="" />
-              <div class="absolute w-full left-0 top-0 h-full flex text-white 
-              justify-around items-center opacity-0 group-hover:opacity-100
-              transition-opacity duration-500 z-10">
-                <i class="i-ep:zoom-in text-3xl cursor-pointer" onClick={handlePreview}></i>
-                <i class="i-ep:delete text-3xl cursor-pointer" onClick={removePreview}></i>
-              </div>
-              <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 
-              transition-opacity duration-500"></div>
-            </div>
-            <teleport to="body">
-              <el-dialog v-model={show.value}>
-                <img class="w-full" src={src} alt="" />
-              </el-dialog>
-            </teleport>
-          </div>
-        )
+        return <FilePreview></FilePreview>
       }
     },
     childRef: (ref) => uploadRef.value = ref

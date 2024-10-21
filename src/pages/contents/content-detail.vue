@@ -18,7 +18,7 @@
     </div>
     <div class="container-default mt-2">
       <div class="flex items-center">
-        <el-button type="success">新增章节
+        <el-button type="success" @click="addContent">新增章节
           <template #icon>
             <i class="i-ep:plus text-2xl"></i>
           </template>
@@ -201,5 +201,11 @@ const tableData = ref([
     status: 1
   }
 ])
+
+const addContent = () => {
+  router.push({
+    path: '/contents/add-edit-form'
+  })
+}
 </script>
 <style scoped></style>

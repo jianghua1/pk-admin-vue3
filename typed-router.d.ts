@@ -22,6 +22,7 @@ declare module 'vue-router/auto-routes' {
     '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/contents': RouteRecordInfo<'/contents', '/contents', Record<never, never>, Record<never, never>>,
     '/contents/': RouteRecordInfo<'/contents/', '/contents', Record<never, never>, Record<never, never>>,
+    '/contents/add-edit-form': RouteRecordInfo<'/contents/add-edit-form', '/contents/add-edit-form', Record<never, never>, Record<never, never>>,
     '/contents/content-detail': RouteRecordInfo<'/contents/content-detail', '/contents/content-detail', Record<never, never>, Record<never, never>>,
     '/contents/files': RouteRecordInfo<'/contents/files', '/contents/files', Record<never, never>, Record<never, never>>,
     '/contents/notes': RouteRecordInfo<'/contents/notes', '/contents/notes', Record<never, never>, Record<never, never>>,

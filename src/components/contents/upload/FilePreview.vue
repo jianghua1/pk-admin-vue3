@@ -32,7 +32,7 @@ interface FilePreviewProps {
 const props = defineProps<FilePreviewProps>()
 const src = ref('')
 
-const emits = defineEmits(['remove', 'preview'])
+const emits = defineEmits(['remove'])
 
 onBeforeMount(() => {
   const raw = props.file.raw as File
@@ -55,7 +55,7 @@ const handleRemove = () => {
 }
 
 const handleRreview = () => {
-  // toggle(true)
+  toggle(true)
 }
 </script>
 <style scoped></style>

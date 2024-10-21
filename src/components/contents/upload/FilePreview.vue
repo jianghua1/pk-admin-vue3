@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="relative group w-full h-auto rounded border overflow-hidden">
-      <img src={src} alt="" />
+      <img :src=src alt="" />
       <div class="absolute w-full left-0 top-0 h-full flex text-white 
               justify-around items-center opacity-0 group-hover:opacity-100
               transition-opacity duration-500 z-10">
@@ -13,30 +13,49 @@
     </div>
     <teleport to="body">
       <el-dialog v-model="show">
-        <img class="w-full" src={src} alt="" />
+        <img class="w-full" :src=src alt="" />
       </el-dialog>
     </teleport>
   </div>
 </template>
 
 <script setup lang='ts'>
+import type { UploadFile } from 'element-plus';
+
 
 const [show, toggle] = useToggle(false)
-const [visibleUpload, toggleVisibleUpload] = useToggle(true)
 
-const raw = file.raw as File
-const src = URL.createObjectURL(raw)
-const uploadRef = ref()
+interface FilePreviewProps {
+  file: UploadFile
+}
+
+const props = defineProps<FilePreviewProps>()
+const src = ref('')
+
+const emits = defineEmits(['remove', 'preview'])
+
+onBeforeMount(() => {
+  const raw = props.file.raw as File
+  src.value = URL.createObjectURL(raw)
+})
+
+watch(
+  () => props.file,
+  (newVal: UploadFile) => {
+    const raw = newVal.raw as File
+    src.value = URL.createObjectURL(raw)
+  },
+  {
+    immediate: true
+  }
+)
 
 const handleRemove = () => {
-  if (uploadRef.value && uploadRef.value.clearFiles) {
-    uploadRef.value.clearFiles()
-    toggleVisibleUpload(true)
-  }
+  emits('remove')
 }
 
 const handleRreview = () => {
-  toggle(true)
+  // toggle(true)
 }
 </script>
 <style scoped></style>

@@ -131,9 +131,13 @@ const addEditFormSchema = ref<VpFormSchema>([
       defaultSlot: () => <UploadTrigger></UploadTrigger>,
       tipSlot: () => <div class="tips text-sm text-gray-300">支持jpg/png文件 文件大小5M以内</div>,
       fileSlot: ({ file }) => {
-
-
-        return <FilePreview></FilePreview>
+        const handleRemove = () => {
+          if (uploadRef.value && uploadRef.value.clearFiles) {
+            uploadRef.value.clearFiles()
+            toggleVisibleUpload(true)
+          }
+        }
+        return <FilePreview file={file} onRemove={handleRemove}></FilePreview>
       }
     },
     childRef: (ref) => uploadRef.value = ref

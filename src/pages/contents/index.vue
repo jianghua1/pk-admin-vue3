@@ -41,8 +41,7 @@
         <h4>{{ msg }}</h4>
       </template>
       <template #default>
-        <VpForm v-model="model" :label-width="80" :class="{ hide: !visibleUpload }" :schema="addEditFormSchema"
-          ref="addEditFormRef">
+        <VpForm v-model="model" :label-width="80" :schema="addEditFormSchema" ref="addEditFormRef">
         </VpForm>
       </template>
       <template #footer>
@@ -76,7 +75,7 @@ const msg = ref('新增用户')
 const model = ref()
 const addEditFormRef = ref()
 
-const { uploadRef, visibleUpload, beforeUpload, handleRemove } = useUpload()
+const { uploadRef, beforeUpload, handleRemove } = useUpload()
 
 const addEditFormSchema = ref<VpFormSchema>([
   {
@@ -445,14 +444,4 @@ const handleClose = () => {
 }
 </script>
 
-<style scoped lang="scss">
-.hide {
-  :deep(.tips) {
-    display: none;
-  }
-
-  :deep(.el-upload-dragger) {
-    display: none;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

@@ -59,7 +59,7 @@ import type { VpFormSchema, VpPaginationType, VpTableColumnType } from "el-admin
 import dayjs from 'dayjs'
 import UploadTrigger from '@/components/contents/upload/UploadTrigger.vue'
 import FilePreview from '@/components/contents/upload/FilePreview.vue'
-import { useUpload } from "@/components/contents/upload/useUpload";
+import { useUpload } from "@/components/contents/upload/useUpload"
 
 definePage({
   meta: {
@@ -122,6 +122,72 @@ const addEditFormSchema = ref<VpFormSchema>([
       }
     },
     childRef: (ref) => uploadRef.value = ref
+  },
+  {
+    prop: 'price',
+    value: 0,
+    label: '课程价格',
+    span: 24,
+    type: 'input',
+    attrs: {
+      type: 'number'
+    }
+  },
+  {
+    prop: 'type',
+    value: 0,
+    label: '课程分类',
+    span: 24,
+    type: 'select',
+    // 免费课，实战课，体系课，直播课，专栏，微课，项目，其他
+    children: [
+      { label: '免费课', value: 0 },
+      { label: '实战课', value: 1 },
+      { label: '体系课', value: 2 },
+      { label: '直播课', value: 3 },
+      { label: '专栏', value: 4 },
+      { label: '微课', value: 5 },
+      { label: '项目', value: 6 },
+      { label: '其他', value: 7 }
+    ]
+  },
+  {
+    prop: 'tabs',
+    value: 0,
+    label: '课程方向',
+    span: 24,
+    type: 'select',
+    attrs: {
+      multiple: true
+    },
+    // Java, Android, iOS, PHP, HTML, CSS, JavaScript, 框架, 工具，小程序
+    children: [
+      { label: 'Java', value: 0 },
+      { label: 'Android', value: 1 },
+      { label: 'iOS', value: 2 },
+      { label: 'PHP', value: 3 },
+      { label: 'HTML', value: 4 },
+      { label: 'CSS', value: 5 },
+      { label: 'JavaScript', value: 6 },
+      { label: '框架', value: 7 },
+      { label: '工具', value: 8 },
+      { label: '小程序', value: 9 }
+    ]
+  },
+  {
+    prop: 'level',
+    value: 0,
+    label: '课程难度',
+    span: 24,
+    type: 'select',
+    children: [
+      // 入门，初级，中级，高级，专业
+      { label: '入门', value: 0 },
+      { label: '初级', value: 1 },
+      { label: '中级', value: 2 },
+      { label: '高级', value: 3 },
+      { label: '专业', value: 4 }
+    ]
   }
 ])
 

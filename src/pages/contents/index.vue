@@ -57,11 +57,10 @@
 
 <script setup lang="tsx">
 import type { VpFormSchema, VpPaginationType, VpTableColumnType } from "el-admin-components"
-import { ElMessage } from "element-plus"
-import { useToggle } from '@vueuse/core'
 import dayjs from 'dayjs'
 import UploadTrigger from '@/components/contents/upload/UploadTrigger.vue'
 import FilePreview from '@/components/contents/upload/FilePreview.vue'
+import { useUpload } from "@/components/contents/upload/useUpload";
 
 definePage({
   meta: {
@@ -76,10 +75,8 @@ const direction = ref<'ltr' | 'rtl'>('rtl')
 const msg = ref('新增用户')
 const model = ref()
 const addEditFormRef = ref()
-const uploadRef = ref()
 
-const [show, toggle] = useToggle(false)
-const [visibleUpload, toggleVisibleUpload] = useToggle(true)
+const { uploadRef, visibleUpload, beforeUpload, handleRemove } = useUpload()
 
 const addEditFormSchema = ref<VpFormSchema>([
   {
@@ -116,27 +113,12 @@ const addEditFormSchema = ref<VpFormSchema>([
       limit: 1,
       accept: 'image/*',
       class: 'w-full',
-      beforeUpload: (file) => {
-        console.info('file', file)
-        const isImage = file.type.startsWith('image/')
-        if (!isImage) {
-          ElMessage.error('只能上传图片')
-          return false
-        }
-        toggleVisibleUpload(false)
-        return true
-      }
+      beforeUpload: beforeUpload
     },
     slots: {
       defaultSlot: () => <UploadTrigger></UploadTrigger>,
       tipSlot: () => <div class="tips text-sm text-gray-300">支持jpg/png文件 文件大小5M以内</div>,
       fileSlot: ({ file }) => {
-        const handleRemove = () => {
-          if (uploadRef.value && uploadRef.value.clearFiles) {
-            uploadRef.value.clearFiles()
-            toggleVisibleUpload(true)
-          }
-        }
         return <FilePreview file={file} onRemove={handleRemove}></FilePreview>
       }
     },

@@ -29,7 +29,7 @@ declare module 'vue' {
     ElTree: typeof import('element-plus/es')['ElTree']
     FilePreview: typeof import('./src/components/contents/upload/FilePreview.vue')['default']
     GeetestCaptcha: typeof import('./src/components/verification/GeetestCaptcha.vue')['default']
-    JsonPreview: typeof import('./src/components/contents/JsonPreview.vue')['default']
+    JsonPreview: typeof import('./src/components/contents/json/JsonPreview.vue')['default']
     JsonPreviewPlus: typeof import('./src/components/contents/json/JsonPreviewPlus.vue')['default']
     MessageItem: typeof import('./src/components/messages/MessageItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

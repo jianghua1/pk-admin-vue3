@@ -14,7 +14,8 @@
                 </el-tab-pane>
                 <el-tab-pane label="JSON预览" name="json">  
                   <div class="w-full">
-                    <JsonPreview v-model="model"></JsonPreview>
+                    <!-- <JsonPreview v-model="model"></JsonPreview> -->
+                    <JsonPreviewPlus v-model="model" @change="handleChange"></JsonPreviewPlus>
                   </div>
                 </el-tab-pane>
               </el-tabs>
@@ -152,6 +153,10 @@ onBeforeMount(() => {
 
 const handleNodeClick = (data: any) => {
   Object.assign(model.value, data)
+}
+
+const handleChange = (content) => {
+  if (content && typeof content.json !== 'undefined') Object.assign(model.value, content.json)
 }
 
 const defaultProps = {

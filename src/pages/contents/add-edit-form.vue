@@ -18,7 +18,8 @@ import { useUpload } from "@/components/contents/upload/useUpload"
 
 definePage({
   meta: {
-    hideMenu: true
+    hideMenu: true,
+    title: '新建章节'
   }
 })
 

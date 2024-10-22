@@ -2,14 +2,25 @@
   <div>
     <div class="container-default">
       <div class="left-marker mb-4">菜单管理</div>
-      <el-row class="flex">
-        <el-col :span="8">
-          <el-tree style="max-width: 600px" :data="data" :props="defaultProps" @node-click="handleNodeClick" />
-        </el-col>
-        <el-col :span="16">
-           <VpForm v-model="model" label-width="110" :schema="schema"></VpForm>
-        </el-col>
-      </el-row>
+      <div class="flex">
+          <el-row class="flex flex-1">
+            <el-col :span="8">
+              <el-tree style="max-width: 600px" :data="data" :props="defaultProps" @node-click="handleNodeClick" />
+            </el-col>
+            <el-col :span="16">
+              <el-tabs v-model="activeName" >
+                <el-tab-pane label="表单展示" name="form"> 
+                  <VpForm v-model="model" label-width="110" :schema="schema"></VpForm>
+                </el-tab-pane>
+                <el-tab-pane label="JSON预览" name="json">  
+                  <div class="w-full">
+                    <JsonPreview v-model="model"></JsonPreview>
+                  </div>
+                </el-tab-pane>
+              </el-tabs>
+            </el-col>
+          </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +39,7 @@ definePage({
 })
 
 const { t } = useI18n()
+const activeName = ref('form')
 const data = ref()
 const model = ref()
 
